@@ -128,7 +128,81 @@ function editTx(t: Tx) {
  {!session?<section className="panel auth"><p className="eyebrow">SEU PLANEJAMENTO COMEÇA AQUI</p><h1>{mode==="login"?"Bem-vindo de volta":"Crie sua conta"}</h1><form className="stack" onSubmit={auth}><label>E-mail<input type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder="voce@email.com"/></label><label>Senha<input type="password" minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} placeholder="Mínimo de 8 caracteres"/></label><button className="primary" disabled={busy}>{busy?"Aguarde...":mode==="login"?"Entrar":"Criar conta"}</button></form><button className="textButton" onClick={()=>setMode(mode==="login"?"signup":"login")}>{mode==="login"?"Ainda não tem conta? Cadastre-se":"Já tem conta? Entrar"}</button><p className="small">Pode ser necessário confirmar seu e-mail antes do primeiro acesso.</p></section>:<>
  <section className="welcome"><p className="eyebrow">VISÃO GERAL</p><h1>Seu dinheiro, com direção.</h1><p>Organize. Planeje. Conquiste.</p></section>
  <section className="stats"><article className="stat"><span>Saldo dos lançamentos</span><strong>{brl(income-expenses)}</strong></article><article className="stat"><span>Receitas</span><strong className="positive">{brl(income)}</strong></article><article className="stat"><span>Despesas</span><strong className="negative">{brl(expenses)}</strong></article></section>
- <section className="grid"><article className="panel"><p className="eyebrow">NOVO LANÇAMENTO</p><h2>Registrar movimentação</h2><form className="stack" onSubmit={editingId ? updateTx : addTx}>label>Descrição<input required value={desc} onChange={e=>setDesc(e.target.value)} placeholder="Ex.: Mercado"/></label><div className="two"><label>Tipo<select value={kind} onChange={e=>setKind(e.target.value as "income"|"expense")}><option value="expense">Despesa</option><option value="income">Receita</option></select></label><label>Valor (R$)<input type="number" min="0.01" step="0.01" required value={amount} onChange={e=>setAmount(e.target.value)}/></label></div><label>Categoria<input value={category} onChange={e=>setCategory(e.target.value)}/>{editingId ? "Salvar alterações" : "Salvar lançamento"}</label><button className="primary" 
+  <section className="grid">
+  <article className="panel">
+    <p className="eyebrow">NOVO LANÇAMENTO</p>
+    <h2>Registrar movimentação</h2>
+
+    <form className="stack" onSubmit={editingId ? updateTx : addTx}>
+      <label>
+        Descrição
+        <input
+          required
+          value={desc}
+          onChange={e => setDesc(e.target.value)}
+          placeholder="Ex.: Mercado"
+        />
+      </label>
+
+      <div className="two">
+        <label>
+          Tipo
+          <select
+            value={kind}
+            onChange={e => setKind(e.target.value as "income" | "expense")}
+          >
+            <option value="expense">Despesa</option>
+            <option value="income">Receita</option>
+          </select>
+        </label>
+
+        <label>
+          Valor (R$)
+          <input
+            type="number"
+            min="0.01"
+            step="0.01"
+            required
+            value={amount}
+            onChange={e => setAmount(e.target.value)}
+          />
+        </label>
+      </div>
+
+      <label>
+        Categoria
+        <input
+          value={category}
+          onChange={e => setCategory(e.target.value)}
+        />
+      </label>
+
+      <button className="primary" disabled={busy}>
+        {busy
+          ? "Aguarde..."
+          : editingId
+            ? "Salvar alterações"
+            : "Salvar lançamento"}
+      </button>
+
+      {editingId && (
+        <button
+          type="button"
+          className="ghost"
+          onClick={() => {
+            setEditingId(null);
+            setDesc("");
+            setAmount("");
+            setKind("expense");
+            setCategory("Geral");
+            setMsg("");
+          }}
+        >
+          Cancelar edição
+        </button>
+      )}
+    </form>
+  </article>
  <article className="panel"><p className="eyebrow">METAS E SONHOS</p><h2>Nova meta</h2><form className="stack" onSubmit={addGoal}><label>Nome<input required value={goalName} onChange={e=>setGoalName(e.target.value)} placeholder="Ex.: Reserva de emergência"/></label><label>Valor desejado (R$)<input type="number" min="0.01" step="0.01" required value={goalAmount} onChange={e=>setGoalAmount(e.target.value)}/></label><button className="secondary" disabled={busy}>Criar meta</button></form></article></section>
  <section className="panel"><div className="sectionHead"><div><p className="eyebrow">ACOMPANHAMENTO</p><h2>Últimos lançamentos</h2></div><button className="ghost" onClick={load}>Atualizar</button></div>{tx.length===0?<p className="muted">Ainda não há lançamentos.</p>:<div className="list">{tx.map(x=><div className="listRow" key={x.id}><div><strong>{x.description}</strong><p>{x.category||"Sem categoria"} · {new Date(x.transaction_date+"T12:00:00").toLocaleDateString("pt-BR")}</p></div><strong className={x.type==="income"?"positive":"negative"}>{x.type==="income"?"+":"−"} {brl(Number(x.amount))}</strong><<button className="ghost" type="button" onClick={()=>editTx(x)}>
 Editar
