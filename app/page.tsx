@@ -509,6 +509,8 @@ const reportBalance=reportIncome-reportExpenses;
       </button>
     )}
   </form>
+    </article>
+</section>
   <section className="panel">
   <p className="eyebrow">CONTROLE FINANCEIRO</p>
   <h2>Orçamento mensal</h2>
@@ -560,8 +562,6 @@ const reportBalance=reportIncome-reportExpenses;
       Criar orçamento
     </button>
   </form>
-</section>
-</article>
 </section>
    <section className="panel">
   <div className="sectionHead">
