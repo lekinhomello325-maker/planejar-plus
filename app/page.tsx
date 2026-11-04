@@ -278,6 +278,18 @@ const reportExpenses=useMemo(
 );
 
 const reportBalance=reportIncome-reportExpenses;
+ const reportCategoryTotals=useMemo(()=>{
+  const totals:Record<string,number>={};
+
+  reportTx
+    .filter(x=>x.type==="expense")
+    .forEach(x=>{
+      const name=x.category||"Geral";
+      totals[name]=(totals[name]||0)+Number(x.amount);
+    });
+
+  return Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+},[reportTx]);
  if(!supabase)return <main className="shell"><section className="panel"><div className="brand">PLANEJAR<span>+</span></div><h1>Configure a conexão</h1><p>Copie .env.example para .env.local e preencha a URL base e a chave publicável do Supabase.</p></section></main>;
  return <main className="shell"><header className="top"><div><div className="brand">PLANEJAR<span>+</span></div><p>Sua vida financeira começa com um plano.</p></div>{session&&<button className="ghost" onClick={()=>supabase?.auth.signOut()}>Sair</button>}</header>
  {msg&&<div className="notice">{msg}</div>}
@@ -313,6 +325,37 @@ const reportBalance=reportIncome-reportExpenses;
       <strong className="negative">{brl(reportExpenses)}</strong>
     </article>
   </section>
+   <div className="categoryReport">
+  <h3>Despesas por categoria</h3>
+
+  {reportCategoryTotals.length===0 ? (
+    <p className="muted">Nenhuma despesa registrada neste mês.</p>
+  ) : (
+    <div className="list">
+      {reportCategoryTotals.map(([name,value])=>{
+        const maxValue=Math.max(
+          ...reportCategoryTotals.map(item=>item[1]),
+          1
+        );
+
+        return (
+          <div className="goal" key={name}>
+            <div className="sectionHead">
+              <strong>{name}</strong>
+              <strong>{brl(value)}</strong>
+            </div>
+
+            <div className="bar">
+              <span style={{
+                width:`${value/maxValue*100}%`
+              }}/>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
 </section>
   <section className="grid">
   <article className="panel">
