@@ -262,6 +262,22 @@ async function addGoalDeposit(g: Goal) {
   }
 }
  const income=useMemo(()=>tx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),[tx]),expenses=useMemo(()=>tx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),[tx]);
+ const reportTx=useMemo(
+  ()=>tx.filter(x=>x.transaction_date?.slice(0,7)===reportMonth),
+  [tx,reportMonth]
+);
+
+const reportIncome=useMemo(
+  ()=>reportTx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),
+  [reportTx]
+);
+
+const reportExpenses=useMemo(
+  ()=>reportTx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),
+  [reportTx]
+);
+
+const reportBalance=reportIncome-reportExpenses;
  if(!supabase)return <main className="shell"><section className="panel"><div className="brand">PLANEJAR<span>+</span></div><h1>Configure a conexão</h1><p>Copie .env.example para .env.local e preencha a URL base e a chave publicável do Supabase.</p></section></main>;
  return <main className="shell"><header className="top"><div><div className="brand">PLANEJAR<span>+</span></div><p>Sua vida financeira começa com um plano.</p></div>{session&&<button className="ghost" onClick={()=>supabase?.auth.signOut()}>Sair</button>}</header>
  {msg&&<div className="notice">{msg}</div>}
