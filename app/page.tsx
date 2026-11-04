@@ -12,6 +12,7 @@ export default function Home(){
  const [desc,setDesc]=useState(""),[amount,setAmount]=useState(""),[kind,setKind]=useState<"income"|"expense">("expense"),[category,setCategory]=useState("Geral"),[goalName,setGoalName]=useState(""),[goalAmount,setGoalAmount]=useState("");
  const [editingId,setEditingId]=useState<string|null>(null);
  const [editingGoalId,setEditingGoalId]=useState<string|null>(null);
+ const [goalDeposit,setGoalDeposit]=useState("");
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>data.subscription.unsubscribe()},[]);
  useEffect(()=>{if(session?.user)load();else{setTx([]);setGoals([])}},[session?.user?.id]);
  async function load(){if(!supabase)return;const [a,b]=await Promise.all([supabase.from("transactions").select("id,description,type,amount,category,transaction_date").order("transaction_date",{ascending:false}),supabase.from("goals").select("id,name,target_amount,current_amount,target_date").order("created_at",{ascending:false})]);if(a.error)setMsg(a.error.message);else setTx((a.data||[]) as Tx[]);if(b.error)setMsg(b.error.message);else setGoals((b.data||[]) as Goal[])}
