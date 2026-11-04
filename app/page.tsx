@@ -608,9 +608,9 @@ const reportBalance=reportIncome-reportExpenses;
             ×
           </button>
         </div>
-      ))}
-    </div>
+      )}
   </section>
+  
  <section className="panel">
   <p className="eyebrow">SEUS OBJETIVOS</p>
   <h2>Metas cadastradas</h2>
