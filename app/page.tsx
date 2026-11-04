@@ -610,45 +610,6 @@ const reportBalance=reportIncome-reportExpenses;
         </div>
       ))}
     </div>
-
-<div className="categoryReport">
-  <h3>Evolução financeira — últimos 6 meses</h3>
-
-  {monthlyEvolution.map(m => {
-    const maxValue = Math.max(
-      ...monthlyEvolution.map(item =>
-        Math.max(item.income, item.expenses)
-      ),
-      1
-    );
-
-    return (
-      <div className="goal" key={m.month}>
-        <div className="sectionHead">
-          <strong>{m.label}</strong>
-          <strong>Saldo: {brl(m.balance)}</strong>
-        </div>
-
-        <p>Receitas: {brl(m.income)}</p>
-        <div className="bar">
-          <span style={{
-            width: `${m.income / maxValue * 100}%`,
-            background: "#22c55e"
-          }} />
-        </div>
-
-        <p>Despesas: {brl(m.expenses)}</p>
-        <div className="bar">
-          <span style={{
-            width: `${m.expenses / maxValue * 100}%`,
-            background: "#ef4444"
-          }} />
-        </div>
-      </div>
-    );
-  })}
-</div>
-</section>
  <section className="panel">
   <p className="eyebrow">SEUS OBJETIVOS</p>
   <h2>Metas cadastradas</h2>
