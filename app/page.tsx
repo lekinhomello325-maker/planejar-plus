@@ -608,7 +608,9 @@ const reportBalance=reportIncome-reportExpenses;
             ×
           </button>
         </div>
-      )}
+      ))}
+    </div>
+     )}
   </section>
   
  <section className="panel">
