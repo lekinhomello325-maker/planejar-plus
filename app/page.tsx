@@ -10,7 +10,7 @@ const brl=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"
 export default function Home(){
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[mode,setMode]=useState<"login"|"signup">("login"),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
  const [tx,setTx]=useState<Tx[]>([]),[goals,setGoals]=useState<Goal[]>([]),[budgets,setBudgets]=useState<Budget[]>([]);
- const [desc,setDesc]=useState(""),[amount,setAmount]=useState(""),[kind,setKind]=useState<"income"|"expense">("expense"),[category,setCategory]=useState("Geral"),[goalName,setGoalName]=useState(""),[goalAmount,setGoalAmount]=useState("");
+ const [desc,setDesc]=useState(""),[amount,setAmount]=useState(""),[kind,setKind]=useState<"income"|"expense">("expense"),[category,setCategory]=useState("Geral"),[goalName,setGoalName]=useState(""),[goalAmount,setGoalAmount]=useState(""),[budgetCategory,setBudgetCategory]=useState("Geral"),[budgetLimit,setBudgetLimit]=useState(""),[budgetMonth,setBudgetMonth]=useState(new Date().toISOString().slice(0,7));
  const [editingId,setEditingId]=useState<string|null>(null);
  const [editingGoalId,setEditingGoalId]=useState<string|null>(null);
  const [goalDeposit,setGoalDeposit]=useState("");
