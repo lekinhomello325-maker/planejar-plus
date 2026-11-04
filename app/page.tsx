@@ -5,7 +5,7 @@ import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 type Tx = {id:string;description:string;type:"income"|"expense";amount:number;category:string|null;transaction_date:string};
 type Goal = {id:string;name:string;target_amount:number;current_amount:number;target_date:string|null};
-type Budget = {id:string;category:string;limit_amount:number;month:string};
+type Budget = {id:string;category:string;monthly_limit:number;month:string};
 const brl=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v||0);
 export default function Home(){
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[mode,setMode]=useState<"login"|"signup">("login"),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
