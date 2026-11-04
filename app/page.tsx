@@ -329,7 +329,7 @@ async function updateGoal(e: FormEvent) {
   </form>
 </article>
 </section>
-   section className="panel">
+   <section className="panel">
   <div className="sectionHead">
     <div>
       <p className="eyebrow">ACOMPANHAMENTO</p>
