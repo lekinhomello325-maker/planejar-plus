@@ -16,7 +16,17 @@ export default function Home(){
  const [goalDeposit,setGoalDeposit]=useState("");
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>data.subscription.unsubscribe()},[]);
  useEffect(()=>{if(session?.user)load();else{setTx([]);setGoals([])}},[session?.user?.id]);
- async function load(){if(!supabase)return;const [a,b]=await Promise.all([supabase.from("transactions").select("id,description,type,amount,category,transaction_date").order("transaction_date",{ascending:false}),supabase.from("goals").select("id,name,target_amount,current_amount,target_date").order("created_at",{ascending:false})]);if(a.error)setMsg(a.error.message);else setTx((a.data||[]) as Tx[]);if(b.error)setMsg(b.error.message);else setGoals((b.data||[]) as Goal[])}
+ async function load(){
+  if(!supabase)return;
+  const [a,b,c]=await Promise.all([
+    supabase.from("transactions").select("id,description,type,amount,category,transaction_date").order("transaction_date",{ascending:false}),
+    supabase.from("goals").select("id,name,target_amount,current_amount,target_date").order("created_at",{ascending:false}),
+    supabase.from("budgets").select("id,category,monthly_limit,month").order("month",{ascending:false})
+  ]);
+  if(a.error)setMsg(a.error.message);else setTx((a.data||[]) as Tx[]);
+  if(b.error)setMsg(b.error.message);else setGoals((b.data||[]) as Goal[]);
+  if(c.error)setMsg(c.error.message);else setBudgets((c.data||[]) as Budget[]);
+ }
  async function auth(e:FormEvent){e.preventDefault();if(!supabase)return;setBusy(true);setMsg("");const r=mode==="signup"?await supabase.auth.signUp({email,password}):await supabase.auth.signInWithPassword({email,password});setBusy(false);if(r.error)setMsg(r.error.message);else if(mode==="signup"&&!r.data.session)setMsg("Cadastro iniciado. Confira seu e-mail para confirmar a conta.");else setMsg("Acesso realizado.")}
  async function addTx(e: FormEvent) {
   e.preventDefault();
