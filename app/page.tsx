@@ -14,7 +14,59 @@ export default function Home(){
  useEffect(()=>{if(session?.user)load();else{setTx([]);setGoals([])}},[session?.user?.id]);
  async function load(){if(!supabase)return;const [a,b]=await Promise.all([supabase.from("transactions").select("id,description,type,amount,category,transaction_date").order("transaction_date",{ascending:false}),supabase.from("goals").select("id,name,target_amount,current_amount,target_date").order("created_at",{ascending:false})]);if(a.error)setMsg(a.error.message);else setTx((a.data||[]) as Tx[]);if(b.error)setMsg(b.error.message);else setGoals((b.data||[]) as Goal[])}
  async function auth(e:FormEvent){e.preventDefault();if(!supabase)return;setBusy(true);setMsg("");const r=mode==="signup"?await supabase.auth.signUp({email,password}):await supabase.auth.signInWithPassword({email,password});setBusy(false);if(r.error)setMsg(r.error.message);else if(mode==="signup"&&!r.data.session)setMsg("Cadastro iniciado. Confira seu e-mail para confirmar a conta.");else setMsg("Acesso realizado.")}
- async function addTx(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!desc.trim()||Number(amount)<=0)return;setBusy(true);const {error}=await supabase.from("transactions").insert({user_id:session.user.id,description:desc.trim(),type:kind,amount:Number(amount),category,transaction_date:new Date().toISOString().slice(0,10)});setBusy(false);if(error)setMsg(error.message);else{setDesc("");setAmount("");setMsg("Lançamento salvo.");await load()}}
+ async function addTx(e: FormEvent) {
+  e.preventDefault();
+
+  if (!supabase) {
+    setMsg("Erro: conexão com o banco de dados não encontrada.");
+    return;
+  }
+
+  if (!session?.user) {
+    setMsg("Sua sessão expirou. Entre novamente na sua conta.");
+    return;
+  }
+
+  if (!desc.trim()) {
+    setMsg("Preencha a descrição do lançamento.");
+    return;
+  }
+
+  if (!amount || Number(amount) <= 0 || !Number.isFinite(Number(amount))) {
+    setMsg("Informe um valor válido, maior que zero.");
+    return;
+  }
+
+  setBusy(true);
+  setMsg("Salvando lançamento...");
+
+  try {
+    const { error } = await supabase
+      .from("transactions")
+      .insert({
+        user_id: session.user.id,
+        description: desc.trim(),
+        type: kind,
+        amount: Number(amount),
+        category,
+        transaction_date: new Date().toISOString().slice(0, 10)
+      });
+
+    if (error) {
+      setMsg("Erro ao salvar: " + error.message);
+      return;
+    }
+
+    setDesc("");
+    setAmount("");
+    setMsg("Lançamento salvo com sucesso!");
+    await load();
+  } catch (error) {
+    setMsg("Falha inesperada ao salvar o lançamento.");
+  } finally {
+    setBusy(false);
+  }
+}
  async function removeTx(id:string){if(!supabase)return;const {error}=await supabase.from("transactions").delete().eq("id",id);if(error)setMsg(error.message);else{setMsg("Lançamento excluído.");await load()}}
  async function addGoal(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!goalName.trim()||Number(goalAmount)<=0)return;setBusy(true);const {error}=await supabase.from("goals").insert({user_id:session.user.id,name:goalName.trim(),target_amount:Number(goalAmount),current_amount:0});setBusy(false);if(error)setMsg(error.message);else{setGoalName("");setGoalAmount("");setMsg("Meta criada.");await load()}}
  const income=useMemo(()=>tx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),[tx]),expenses=useMemo(()=>tx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),[tx]);
