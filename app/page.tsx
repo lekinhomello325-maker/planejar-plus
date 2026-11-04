@@ -378,6 +378,47 @@ async function updateGoal(e: FormEvent) {
     </div>
   )}
 </section>
- <section className="panel"><p className="eyebrow">SEUS OBJETIVOS</p><h2>Metas cadastradas</h2>{goals.length===0?<p className="muted">Suas metas aparecerão aqui.</p>:<div className="list">{goals.map(g=><div className="goal" key={g.id}><div className="sectionHead"><strong>{g.name}</strong><span>{brl(Number(g.current_amount))} / {brl(Number(g.target_amount))}</span></div><div className="bar"><span style={{width:`${Math.min(100,Number(g.target_amount)?Number(g.current_amount)/Number(g.target_amount)*100:0)}%`}}/></div></div>)}</div>}</section>
+ <section className="panel">
+  <p className="eyebrow">SEUS OBJETIVOS</p>
+  <h2>Metas cadastradas</h2>
+
+  {goals.length === 0 ? (
+    <p className="muted">Suas metas aparecerão aqui.</p>
+  ) : (
+    <div className="list">
+      {goals.map(g => (
+        <div className="goal" key={g.id}>
+          <div className="sectionHead">
+            <strong>{g.name}</strong>
+            <span>
+              {brl(Number(g.current_amount))} / {brl(Number(g.target_amount))}
+            </span>
+          </div>
+
+          <div className="bar">
+            <span
+              style={{
+                width: `${Math.min(
+                  100,
+                  Number(g.target_amount)
+                    ? Number(g.current_amount) / Number(g.target_amount) * 100
+                    : 0
+                )}%`
+              }}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="ghost"
+            onClick={() => editGoal(g)}
+          >
+            Editar meta
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
  </>}<footer>PLANEJAR+ · Organize. Planeje. Conquiste.</footer></main>
 }
