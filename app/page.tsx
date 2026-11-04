@@ -588,7 +588,7 @@ async function addGoalDeposit(g: Goal) {
           .filter(t =>
             t.type === "expense" &&
             t.category === b.category &&
-            t.transaction_date?.slice(0, 7) === b.month
+            t.transaction_date?.slice(0, 7) === b.month?.slice(0, 7)
           )
           .reduce((total, t) => total + Number(t.amount), 0);
 
