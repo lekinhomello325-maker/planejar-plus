@@ -575,5 +575,59 @@ async function addGoalDeposit(g: Goal) {
     </div>
   )}
 </section>
+  <section className="panel">
+  <p className="eyebrow">ACOMPANHAMENTO</p>
+  <h2>Seus orçamentos</h2>
+
+  {budgets.length === 0 ? (
+    <p className="muted">Seus orçamentos aparecerão aqui.</p>
+  ) : (
+    <div className="list">
+      {budgets.map(b => {
+        const spent = tx
+          .filter(t =>
+            t.type === "expense" &&
+            t.category === b.category &&
+            t.transaction_date?.slice(0, 7) === b.month
+          )
+          .reduce((total, t) => total + Number(t.amount), 0);
+
+        const limit = Number(b.monthly_limit);
+        const percent = limit > 0 ? spent / limit * 100 : 0;
+
+        return (
+          <div className="goal" key={b.id}>
+            <div className="sectionHead">
+              <strong>{b.category}</strong>
+              <span>{b.month}</span>
+            </div>
+
+            <p>
+              Gasto: {brl(spent)} / {brl(limit)}
+            </p>
+
+            <div className="bar">
+              <span
+                style={{
+                  width: `${Math.min(100, percent)}%`
+                }}
+              />
+            </div>
+
+            <p className="muted">
+              {percent.toFixed(1)}% do orçamento utilizado
+            </p>
+
+            <p>
+              {spent > limit
+                ? `Você ultrapassou o limite em ${brl(spent - limit)}.`
+                : `Disponível: ${brl(limit - spent)}`}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</section>
  </>}<footer>PLANEJAR+ · Organize. Planeje. Conquiste.</footer></main>
 }
