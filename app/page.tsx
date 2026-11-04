@@ -204,10 +204,55 @@ function editTx(t: Tx) {
     </form>
   </article>
  <article className="panel"><p className="eyebrow">METAS E SONHOS</p><h2>Nova meta</h2><form className="stack" onSubmit={addGoal}><label>Nome<input required value={goalName} onChange={e=>setGoalName(e.target.value)} placeholder="Ex.: Reserva de emergência"/></label><label>Valor desejado (R$)<input type="number" min="0.01" step="0.01" required value={goalAmount} onChange={e=>setGoalAmount(e.target.value)}/></label><button className="secondary" disabled={busy}>Criar meta</button></form></article></section>
- <section className="panel"><div className="sectionHead"><div><p className="eyebrow">ACOMPANHAMENTO</p><h2>Últimos lançamentos</h2></div><button className="ghost" onClick={load}>Atualizar</button></div>{tx.length===0?<p className="muted">Ainda não há lançamentos.</p>:<div className="list">{tx.map(x=><div className="listRow" key={x.id}><div><strong>{x.description}</strong><p>{x.category||"Sem categoria"} · {new Date(x.transaction_date+"T12:00:00").toLocaleDateString("pt-BR")}</p></div><strong className={x.type==="income"?"positive":"negative"}>{x.type==="income"?"+":"−"} {brl(Number(x.amount))}</strong><<button className="ghost" type="button" onClick={()=>editTx(x)}>
-Editar
-</button>
-<button className="delete" type="button" onClick={()=>removeTx(x.id)}>×</button></div>)}</div>}</section>
+<section className="panel">
+  <div className="sectionHead">
+    <div>
+      <p className="eyebrow">ACOMPANHAMENTO</p>
+      <h2>Últimos lançamentos</h2>
+    </div>
+    <button type="button" className="ghost" onClick={load}>
+      Atualizar
+    </button>
+  </div>
+
+  {tx.length === 0 ? (
+    <p className="muted">Ainda não há lançamentos.</p>
+  ) : (
+    <div className="list">
+      {tx.map(x => (
+        <div className="listRow" key={x.id}>
+          <div>
+            <strong>{x.description}</strong>
+            <p>
+              {x.category || "Sem categoria"} ·{" "}
+              {new Date(x.transaction_date + "T12:00:00").toLocaleDateString("pt-BR")}
+            </p>
+          </div>
+
+          <strong className={x.type === "income" ? "positive" : "negative"}>
+            {x.type === "income" ? "+" : "−"} {brl(Number(x.amount))}
+          </strong>
+
+          <button
+            type="button"
+            className="ghost"
+            onClick={() => editTx(x)}
+          >
+            Editar
+          </button>
+
+          <button
+            type="button"
+            className="delete"
+            onClick={() => removeTx(x.id)}
+          >
+            ×
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
+</section>
  <section className="panel"><p className="eyebrow">SEUS OBJETIVOS</p><h2>Metas cadastradas</h2>{goals.length===0?<p className="muted">Suas metas aparecerão aqui.</p>:<div className="list">{goals.map(g=><div className="goal" key={g.id}><div className="sectionHead"><strong>{g.name}</strong><span>{brl(Number(g.current_amount))} / {brl(Number(g.target_amount))}</span></div><div className="bar"><span style={{width:`${Math.min(100,Number(g.target_amount)?Number(g.current_amount)/Number(g.target_amount)*100:0)}%`}}/></div></div>)}</div>}</section>
  </>}<footer>PLANEJAR+ · Organize. Planeje. Conquiste.</footer></main>
 }
