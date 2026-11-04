@@ -278,8 +278,58 @@ async function updateGoal(e: FormEvent) {
       )}
     </form>
   </article>
- <article className="panel"><p className="eyebrow">METAS E SONHOS</p><h2>Nova meta</h2><form className="stack" onSubmit={addGoal}><label>Nome<input required value={goalName} onChange={e=>setGoalName(e.target.value)} placeholder="Ex.: Reserva de emergência"/></label><label>Valor desejado (R$)<input type="number" min="0.01" step="0.01" required value={goalAmount} onChange={e=>setGoalAmount(e.target.value)}/></label><button className="secondary" disabled={busy}>Criar meta</button></form></article></section>
-<section className="panel">
+ <article className="panel">
+  <p className="eyebrow">METAS E SONHOS</p>
+  <h2>{editingGoalId ? "Editar meta" : "Nova meta"}</h2>
+
+  <form
+    className="stack"
+    onSubmit={editingGoalId ? updateGoal : addGoal}
+  >
+    <label>
+      Nome
+      <input
+        required
+        value={goalName}
+        onChange={e => setGoalName(e.target.value)}
+        placeholder="Ex.: Reserva de emergência"
+      />
+    </label>
+
+    <label>
+      Valor desejado (R$)
+      <input
+        type="number"
+        min="0.01"
+        step="0.01"
+        required
+        value={goalAmount}
+        onChange={e => setGoalAmount(e.target.value)}
+      />
+    </label>
+
+    <button className="secondary" disabled={busy}>
+      {editingGoalId ? "Salvar alterações" : "Criar meta"}
+    </button>
+
+    {editingGoalId && (
+      <button
+        type="button"
+        className="ghost"
+        onClick={() => {
+          setEditingGoalId(null);
+          setGoalName("");
+          setGoalAmount("");
+          setMsg("Edição cancelada.");
+        }}
+      >
+        Cancelar edição
+      </button>
+    )}
+  </form>
+</article>
+</section>
+   section className="panel">
   <div className="sectionHead">
     <div>
       <p className="eyebrow">ACOMPANHAMENTO</p>
