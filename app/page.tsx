@@ -160,6 +160,40 @@ function editTx(t: Tx) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 async function updateGoal(e: FormEvent) {
+ async function addGoalDeposit(g: Goal) {
+  if (!supabase || !session?.user) return;
+
+  const value = Number(goalDeposit);
+
+  if (!Number.isFinite(value) || value <= 0) {
+    setMsg("Informe um valor válido para adicionar.");
+    return;
+  }
+
+  setBusy(true);
+  setMsg("Atualizando valor da meta...");
+
+  try {
+    const { error } = await supabase
+      .from("goals")
+      .update({
+        current_amount: Number(g.current_amount) + value
+      })
+      .eq("id", g.id)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      setMsg("Erro ao adicionar valor: " + error.message);
+      return;
+    }
+
+    setGoalDeposit("");
+    setMsg("Valor adicionado à meta com sucesso!");
+    await load();
+  } finally {
+    setBusy(false);
+  }
+ }
   e.preventDefault();
 
   if (!supabase || !session?.user || !editingGoalId) return;
