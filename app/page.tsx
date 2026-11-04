@@ -718,5 +718,59 @@ const reportBalance=reportIncome-reportExpenses;
     </div>
   )}
 </section>
+  <section className="panel">
+  <p className="eyebrow">INTELIGÊNCIA FINANCEIRA</p>
+  <h2>Planejado x Realizado</h2>
+
+  <p className="muted">
+    Comparação dos limites definidos com os gastos reais do mês selecionado.
+  </p>
+
+  {budgets.filter(b => b.month?.slice(0,7) === reportMonth).length === 0 ? (
+    <p className="muted">
+      Nenhum orçamento cadastrado para este mês.
+    </p>
+  ) : (
+    <div className="list">
+      {budgets
+        .filter(b => b.month?.slice(0,7) === reportMonth)
+        .map(b => {
+          const spent = reportTx
+            .filter(t =>
+              t.type === "expense" &&
+              t.category === b.category
+            )
+            .reduce((total,t) => total + Number(t.amount),0);
+
+          const limit = Number(b.monthly_limit);
+          const percent = limit > 0 ? spent / limit * 100 : 0;
+
+          return (
+            <div className="goal" key={b.id}>
+              <div className="sectionHead">
+                <strong>{b.category}</strong>
+                <strong>{percent.toFixed(1)}%</strong>
+              </div>
+
+              <p>Planejado: {brl(limit)}</p>
+              <p>Realizado: {brl(spent)}</p>
+
+              <div className="bar">
+                <span style={{
+                  width:`${Math.min(100,percent)}%`
+                }}/>
+              </div>
+
+              <p className="muted">
+                {spent > limit
+                  ? `Acima do limite: ${brl(spent-limit)}`
+                  : `Ainda disponível: ${brl(limit-spent)}`}
+              </p>
+            </div>
+          );
+        })}
+    </div>
+  )}
+</section>
  </>}<footer>PLANEJAR+ · Organize. Planeje. Conquiste.</footer></main>
 }
