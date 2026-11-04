@@ -119,7 +119,36 @@ function editTx(t: Tx) {
     setBusy(false);
   }
 }
- async function removeTx(id:string){if(!supabase)return;const {error}=await supabase.from("transactions").delete().eq("id",id);if(error)setMsg(error.message);else{setMsg("Lançamento excluído.");await load()}}
+ async function removeTx(id: string) {
+  if (!supabase || !session?.user) return;
+
+  const confirmar = window.confirm(
+    "Tem certeza que deseja excluir este lançamento? Essa ação não poderá ser desfeita."
+  );
+
+  if (!confirmar) return;
+
+  setBusy(true);
+  setMsg("Excluindo lançamento...");
+
+  try {
+    const { error } = await supabase
+      .from("transactions")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      setMsg("Erro ao excluir: " + error.message);
+      return;
+    }
+
+    setMsg("Lançamento excluído com sucesso!");
+    await load();
+  } finally {
+    setBusy(false);
+  }
+ }
  async function addGoal(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!goalName.trim()||Number(goalAmount)<=0)return;setBusy(true);const {error}=await supabase.from("goals").insert({user_id:session.user.id,name:goalName.trim(),target_amount:Number(goalAmount),current_amount:0});setBusy(false);if(error)setMsg(error.message);else{setGoalName("");setGoalAmount("");setMsg("Meta criada.");await load()}}
  const income=useMemo(()=>tx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),[tx]),expenses=useMemo(()=>tx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),[tx]);
  if(!supabase)return <main className="shell"><section className="panel"><div className="brand">PLANEJAR<span>+</span></div><h1>Configure a conexão</h1><p>Copie .env.example para .env.local e preencha a URL base e a chave publicável do Supabase.</p></section></main>;
