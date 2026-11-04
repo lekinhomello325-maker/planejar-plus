@@ -392,6 +392,58 @@ async function addGoalDeposit(g: Goal) {
       </button>
     )}
   </form>
+  <section className="panel">
+  <p className="eyebrow">CONTROLE FINANCEIRO</p>
+  <h2>Orçamento mensal</h2>
+  <p className="muted">Defina quanto pretende gastar em cada categoria.</p>
+
+  <form className="stack" onSubmit={addBudget}>
+    <label>
+      Categoria
+      <select
+        value={budgetCategory}
+        onChange={e => setBudgetCategory(e.target.value)}
+      >
+        <option>Geral</option>
+        <option>Alimentação</option>
+        <option>Moradia</option>
+        <option>Transporte</option>
+        <option>Saúde</option>
+        <option>Educação</option>
+        <option>Lazer</option>
+        <option>Contas</option>
+        <option>Outros</option>
+      </select>
+    </label>
+
+    <label>
+      Limite mensal (R$)
+      <input
+        type="number"
+        min="0.01"
+        step="0.01"
+        required
+        value={budgetLimit}
+        onChange={e => setBudgetLimit(e.target.value)}
+        placeholder="Ex.: 500"
+      />
+    </label>
+
+    <label>
+      Mês de referência
+      <input
+        type="month"
+        required
+        value={budgetMonth}
+        onChange={e => setBudgetMonth(e.target.value)}
+      />
+    </label>
+
+    <button className="secondary" disabled={busy}>
+      Criar orçamento
+    </button>
+  </form>
+</section>
 </article>
 </section>
    <section className="panel">
