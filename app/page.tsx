@@ -278,6 +278,34 @@ const reportExpenses=useMemo(
 );
 
 const reportBalance=reportIncome-reportExpenses;
+ const monthlyEvolution=useMemo(()=>{
+  const [year,month]=reportMonth.split("-").map(Number);
+
+  return Array.from({length:6},(_,i)=>{
+    const date=new Date(year,month-1-(5-i),1);
+    const key=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}`;
+
+    const monthTx=tx.filter(t=>
+      t.transaction_date?.slice(0,7)===key
+    );
+
+    const income=monthTx
+      .filter(t=>t.type==="income")
+      .reduce((s,t)=>s+Number(t.amount),0);
+
+    const expenses=monthTx
+      .filter(t=>t.type==="expense")
+      .reduce((s,t)=>s+Number(t.amount),0);
+
+    return {
+      month:key,
+      label:date.toLocaleDateString("pt-BR",{month:"short",year:"2-digit"}),
+      income,
+      expenses,
+      balance:income-expenses
+    };
+  });
+},[tx,reportMonth]);
  const reportCategoryTotals=useMemo(()=>{
   const totals:Record<string,number>={};
 
