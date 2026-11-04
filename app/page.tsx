@@ -68,6 +68,48 @@ export default function Home(){
     setBusy(false);
   }
 }
+ async function updateTx(e: FormEvent) {
+  e.preventDefault();
+
+  if (!supabase || !session?.user || !editingId) return;
+
+  if (!desc.trim() || Number(amount) <= 0) {
+    setMsg("Preencha uma descrição e um valor válido.");
+    return;
+  }
+
+  setBusy(true);
+  setMsg("Atualizando lançamento...");
+
+  try {
+    const { error } = await supabase
+      .from("transactions")
+      .update({
+        description: desc.trim(),
+        type: kind,
+        amount: Number(amount),
+        category
+      })
+      .eq("id", editingId)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      setMsg("Erro ao atualizar: " + error.message);
+      return;
+    }
+
+    setDesc("");
+    setAmount("");
+    setKind("expense");
+    setCategory("Geral");
+    setEditingId(null);
+    setMsg("Lançamento atualizado com sucesso!");
+
+    await load();
+  } finally {
+    setBusy(false);
+  }
+}
  async function removeTx(id:string){if(!supabase)return;const {error}=await supabase.from("transactions").delete().eq("id",id);if(error)setMsg(error.message);else{setMsg("Lançamento excluído.");await load()}}
  async function addGoal(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!goalName.trim()||Number(goalAmount)<=0)return;setBusy(true);const {error}=await supabase.from("goals").insert({user_id:session.user.id,name:goalName.trim(),target_amount:Number(goalAmount),current_amount:0});setBusy(false);if(error)setMsg(error.message);else{setGoalName("");setGoalAmount("");setMsg("Meta criada.");await load()}}
  const income=useMemo(()=>tx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),[tx]),expenses=useMemo(()=>tx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),[tx]);
