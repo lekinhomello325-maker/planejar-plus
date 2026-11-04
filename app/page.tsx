@@ -171,7 +171,7 @@ function editTx(t: Tx) {
     user_id:session.user.id,
     category:budgetCategory.trim(),
     monthly_limit:Number(budgetLimit),
-    month:budgetMonth
+    month:budgetMonth + "-01"
   });
   setBusy(false);
   if(error)setMsg(error.message);
