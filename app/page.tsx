@@ -68,6 +68,48 @@ export default function Home(){
     setBusy(false);
   }
 }
+async function updateTx(e: FormEvent) {
+  e.preventDefault();
+
+  if (!supabase || !session?.user || !editingId) return;
+
+  if (!desc.trim() || Number(amount) <= 0) {
+    setMsg("Preencha uma descrição e um valor válido.");
+    return;
+  }
+
+  setBusy(true);
+  setMsg("Atualizando lançamento...");
+
+  try {
+    const { error } = await supabase
+      .from("transactions")
+      .update({
+        description: desc.trim(),
+        type: kind,
+        amount: Number(amount),
+        category
+      })
+      .eq("id", editingId)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      setMsg("Erro ao atualizar: " + error.message);
+      return;
+    }
+
+    setDesc("");
+    setAmount("");
+    setKind("expense");
+    setCategory("Geral");
+    setEditingId(null);
+    setMsg("Lançamento atualizado com sucesso!");
+
+    await load();
+  } finally {
+    setBusy(false);
+  }
+}
  async function updateTx(e: FormEvent) {
   e.preventDefault();
 
