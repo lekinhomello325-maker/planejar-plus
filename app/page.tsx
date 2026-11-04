@@ -151,6 +151,51 @@ function editTx(t: Tx) {
   }
  }
  async function addGoal(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!goalName.trim()||Number(goalAmount)<=0)return;setBusy(true);const {error}=await supabase.from("goals").insert({user_id:session.user.id,name:goalName.trim(),target_amount:Number(goalAmount),current_amount:0});setBusy(false);if(error)setMsg(error.message);else{setGoalName("");setGoalAmount("");setMsg("Meta criada.");await load()}}
+ function editGoal(g: Goal) {
+  setEditingGoalId(g.id);
+  setGoalName(g.name);
+  setGoalAmount(String(g.target_amount));
+  setMsg("Editando meta: " + g.name);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+async function updateGoal(e: FormEvent) {
+  e.preventDefault();
+
+  if (!supabase || !session?.user || !editingGoalId) return;
+
+  if (!goalName.trim() || Number(goalAmount) <= 0) {
+    setMsg("Informe o nome e um valor válido para a meta.");
+    return;
+  }
+
+  setBusy(true);
+  setMsg("Atualizando meta...");
+
+  try {
+    const { error } = await supabase
+      .from("goals")
+      .update({
+        name: goalName.trim(),
+        target_amount: Number(goalAmount)
+      })
+      .eq("id", editingGoalId)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      setMsg("Erro ao atualizar meta: " + error.message);
+      return;
+    }
+
+    setGoalName("");
+    setGoalAmount("");
+    setEditingGoalId(null);
+    setMsg("Meta atualizada com sucesso!");
+
+    await load();
+  } finally {
+    setBusy(false);
+  }
+}
  const income=useMemo(()=>tx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),[tx]),expenses=useMemo(()=>tx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),[tx]);
  if(!supabase)return <main className="shell"><section className="panel"><div className="brand">PLANEJAR<span>+</span></div><h1>Configure a conexão</h1><p>Copie .env.example para .env.local e preencha a URL base e a chave publicável do Supabase.</p></section></main>;
  return <main className="shell"><header className="top"><div><div className="brand">PLANEJAR<span>+</span></div><p>Sua vida financeira começa com um plano.</p></div>{session&&<button className="ghost" onClick={()=>supabase?.auth.signOut()}>Sair</button>}</header>
