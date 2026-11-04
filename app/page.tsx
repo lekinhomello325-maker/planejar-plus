@@ -443,6 +443,44 @@ async function updateGoal(e: FormEvent) {
             />
           </div>
 
+          <p className="muted">
+            {Math.min(
+              100,
+              Number(g.target_amount)
+                ? Number(g.current_amount) / Number(g.target_amount) * 100
+                : 0
+            ).toFixed(1)}% concluído
+          </p>
+
+          <p>
+            Faltam: {brl(Math.max(0, Number(g.target_amount) - Number(g.current_amount)))}
+          </p>
+
+          <form
+            className="stack"
+            onSubmit={e => {
+              e.preventDefault();
+              addGoalDeposit(g);
+            }}
+          >
+            <label>
+              Valor a adicionar (R$)
+              <input
+                type="number"
+                min="0.01"
+                step="0.01"
+                required
+                value={goalDeposit}
+                onChange={e => setGoalDeposit(e.target.value)}
+                placeholder="Ex.: 100,00"
+              />
+            </label>
+
+            <button type="submit" className="secondary" disabled={busy}>
+              Adicionar valor
+            </button>
+          </form>
+
           <button
             type="button"
             className="ghost"
