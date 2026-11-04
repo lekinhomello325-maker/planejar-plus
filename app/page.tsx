@@ -163,6 +163,24 @@ function editTx(t: Tx) {
   }
  }
  async function addGoal(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!goalName.trim()||Number(goalAmount)<=0)return;setBusy(true);const {error}=await supabase.from("goals").insert({user_id:session.user.id,name:goalName.trim(),target_amount:Number(goalAmount),current_amount:0});setBusy(false);if(error)setMsg(error.message);else{setGoalName("");setGoalAmount("");setMsg("Meta criada.");await load()}}
+ async function addBudget(e:FormEvent){
+  e.preventDefault();
+  if(!supabase||!session?.user||!budgetCategory.trim()||Number(budgetLimit)<=0)return;
+  setBusy(true);
+  const {error}=await supabase.from("budgets").insert({
+    user_id:session.user.id,
+    category:budgetCategory.trim(),
+    monthly_limit:Number(budgetLimit),
+    month:budgetMonth
+  });
+  setBusy(false);
+  if(error)setMsg(error.message);
+  else{
+    setBudgetLimit("");
+    setMsg("Orçamento criado com sucesso.");
+    await load();
+  }
+ }
  function editGoal(g: Goal) {
   setEditingGoalId(g.id);
   setGoalName(g.name);
