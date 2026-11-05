@@ -681,7 +681,55 @@ const reportBalance=reportIncome-reportExpenses;
     <button className="primary" disabled={busy}>
       {busy ? "Aguarde..." : "Cadastrar dívida"}
     </button>
-  </form>
+    </form>
+
+  <div className="categoryReport">
+    <h3>Minhas dívidas</h3>
+
+    {debts.length === 0 ? (
+      <p className="muted">Nenhuma dívida cadastrada.</p>
+    ) : (
+      <div className="list">
+        {debts.map(d => {
+          const remaining = Number(d.total_amount) - Number(d.paid_amount);
+          const progress = Math.min(
+            100,
+            Math.max(0, Number(d.paid_amount) / Number(d.total_amount) * 100)
+          );
+
+          return (
+            <div className="goal" key={d.id}>
+              <div className="sectionHead">
+                <strong>{d.creditor}</strong>
+                <strong>{brl(remaining)}</strong>
+              </div>
+
+              <p>{d.description || "Dívida cadastrada"}</p>
+              <p>Valor total: {brl(Number(d.total_amount))}</p>
+              <p>Já pago: {brl(Number(d.paid_amount))}</p>
+              <p>
+                Situação: {remaining <= 0
+                  ? "Quitada"
+                  : Number(d.paid_amount) > 0
+                    ? "Parcialmente paga"
+                    : "Em aberto"}
+              </p>
+
+              <div className="bar">
+                <span style={{width: `${progress}%`}} />
+              </div>
+
+              <p>{progress.toFixed(0)}% pago</p>
+
+              <p>
+                Parcelas: {d.installments}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
 </section>
   <section className="panel">
   <p className="eyebrow">CONTROLE FINANCEIRO</p>
