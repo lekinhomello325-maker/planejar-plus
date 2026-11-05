@@ -236,6 +236,49 @@ function editTx(t: Tx) {
     await load();
   }
   }
+  async function registerDebtPayment(debt: Debt) {
+  if (!supabase || !session?.user) return;
+
+  const remaining =
+    Number(debt.total_amount) - Number(debt.paid_amount);
+
+  if (remaining <= 0) {
+    setMsg("Esta dívida já está quitada.");
+    return;
+  }
+
+  const answer = window.prompt(
+    `Saldo restante: ${brl(remaining)}\nQuanto deseja pagar?`
+  );
+
+  if (answer === null) return;
+
+  const payment = Number(answer.replace(",", "."));
+
+  if (!Number.isFinite(payment) || payment <= 0 || payment > remaining) {
+    setMsg("Informe um pagamento válido, dentro do saldo restante.");
+    return;
+  }
+
+  setBusy(true);
+
+  const { error } = await supabase
+    .from("debts")
+    .update({
+      paid_amount: Number(debt.paid_amount) + payment
+    })
+    .eq("id", debt.id)
+    .eq("user_id", session.user.id);
+
+  setBusy(false);
+
+  if (error) {
+    setMsg("Erro ao registrar pagamento: " + error.message);
+  } else {
+    setMsg("Pagamento registrado com sucesso!");
+    await load();
+  }
+  }
  function editGoal(g: Goal) {
   setEditingGoalId(g.id);
   setGoalName(g.name);
