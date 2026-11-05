@@ -41,7 +41,7 @@ const [debtInstallments,setDebtInstallments]=useState("1");
  async function load(){
   if(!supabase)return;
 
-  const [a,b,c,d]=await Promise.all([
+  const [a,b,c,d,e]=await Promise.all([
     supabase.from("transactions").select("id,description,type,amount,category,transaction_date").order("transaction_date",{ascending:false}),
     supabase.from("goals").select("id,name,target_amount,current_amount,target_date").order("created_at",{ascending:false}),
     supabase.from("budgets").select("id,category,monthly_limit,month").order("month",{ascending:false}),
