@@ -767,6 +767,14 @@ const reportBalance=reportIncome-reportExpenses;
               <p>
                 Parcelas: {d.installments}
               </p>
+              <button
+  type="button"
+  className="secondary"
+  disabled={busy || remaining <= 0}
+  onClick={() => registerDebtPayment(d)}
+>
+  Registrar pagamento
+</button>
             </div>
           );
         })}
