@@ -15,6 +15,12 @@ type Debt = {
   due_date:string|null;
   installments:number;
 };
+type DebtPayment = {
+  id: string;
+  debt_id: string;
+  amount: number;
+  payment_date: string;
+};
 const brl=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v||0);
 export default function Home(){
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[mode,setMode]=useState<"login"|"signup">("login"),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
