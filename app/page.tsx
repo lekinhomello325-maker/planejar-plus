@@ -604,6 +604,85 @@ const reportBalance=reportIncome-reportExpenses;
   </form>
     </article>
 </section>
+   <section className="panel">
+  <p className="eyebrow">CONTROLE FINANCEIRO</p>
+  <h2>Controle de dívidas</h2>
+  <p className="muted">
+    Cadastre suas dívidas e acompanhe o que ainda falta pagar.
+  </p>
+
+  <form className="stack" onSubmit={addDebt}>
+    <label>
+      Credor ou empresa
+      <input
+        required
+        value={debtCreditor}
+        onChange={e => setDebtCreditor(e.target.value)}
+        placeholder="Ex.: Banco, loja ou pessoa"
+      />
+    </label>
+
+    <label>
+      Descrição da dívida
+      <input
+        value={debtDescription}
+        onChange={e => setDebtDescription(e.target.value)}
+        placeholder="Ex.: Empréstimo pessoal"
+      />
+    </label>
+
+    <div className="two">
+      <label>
+        Valor total (R$)
+        <input
+          type="number"
+          min="0.01"
+          step="0.01"
+          required
+          value={debtTotal}
+          onChange={e => setDebtTotal(e.target.value)}
+        />
+      </label>
+
+      <label>
+        Valor já pago (R$)
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          value={debtPaid}
+          onChange={e => setDebtPaid(e.target.value)}
+        />
+      </label>
+    </div>
+
+    <div className="two">
+      <label>
+        Vencimento
+        <input
+          type="date"
+          value={debtDueDate}
+          onChange={e => setDebtDueDate(e.target.value)}
+        />
+      </label>
+
+      <label>
+        Quantidade de parcelas
+        <input
+          type="number"
+          min="1"
+          step="1"
+          value={debtInstallments}
+          onChange={e => setDebtInstallments(e.target.value)}
+        />
+      </label>
+    </div>
+
+    <button className="primary" disabled={busy}>
+      {busy ? "Aguarde..." : "Cadastrar dívida"}
+    </button>
+  </form>
+</section>
   <section className="panel">
   <p className="eyebrow">CONTROLE FINANCEIRO</p>
   <h2>Orçamento mensal</h2>
