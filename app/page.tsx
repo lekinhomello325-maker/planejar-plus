@@ -200,6 +200,42 @@ function editTx(t: Tx) {
     await load();
   }
  }
+  async function addDebt(e:FormEvent){
+  e.preventDefault();
+
+  if(!supabase||!session?.user||!debtCreditor.trim()||Number(debtTotal)<=0)return;
+
+  if(Number(debtPaid)<0||Number(debtPaid)>Number(debtTotal)){
+    setMsg("Confira o valor já pago.");
+    return;
+  }
+
+  setBusy(true);
+
+  const {error}=await supabase.from("debts").insert({
+    user_id:session.user.id,
+    creditor:debtCreditor.trim(),
+    description:debtDescription.trim()||null,
+    total_amount:Number(debtTotal),
+    paid_amount:Number(debtPaid),
+    due_date:debtDueDate||null,
+    installments:Math.max(1,Number(debtInstallments)||1)
+  });
+
+  setBusy(false);
+
+  if(error)setMsg(error.message);
+  else{
+    setDebtCreditor("");
+    setDebtDescription("");
+    setDebtTotal("");
+    setDebtPaid("0");
+    setDebtDueDate("");
+    setDebtInstallments("1");
+    setMsg("Dívida cadastrada com sucesso.");
+    await load();
+  }
+  }
  function editGoal(g: Goal) {
   setEditingGoalId(g.id);
   setGoalName(g.name);
