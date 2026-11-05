@@ -46,7 +46,9 @@ const [debtInstallments,setDebtInstallments]=useState("1");
     supabase.from("goals").select("id,name,target_amount,current_amount,target_date").order("created_at",{ascending:false}),
     supabase.from("budgets").select("id,category,monthly_limit,month").order("month",{ascending:false}),
     supabase.from("debts").select("id,creditor,description,total_amount,paid_amount,due_date,installments").order("created_at",{ascending:false})
+    supabase.from("debt_payments").select("id,debt_id,amount,payment_date").order("payment_date",{ascending:false})
   ]);
+   
 
   if(a.error)setMsg(a.error.message);else setTx((a.data||[]) as Tx[]);
   if(b.error)setMsg(b.error.message);else setGoals((b.data||[]) as Goal[]);
