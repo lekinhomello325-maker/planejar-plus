@@ -54,7 +54,9 @@ const [debtInstallments,setDebtInstallments]=useState("1");
   if(b.error)setMsg(b.error.message);else setGoals((b.data||[]) as Goal[]);
   if(c.error)setMsg(c.error.message);else setBudgets((c.data||[]) as Budget[]);
   if(d.error)setMsg(d.error.message);else setDebts((d.data||[]) as Debt[]);
-}
+  if(e.error)setMsg(e.error.message);
+else setDebtPayments((e.data||[]) as DebtPayment[]);
+ }
  async function auth(e:FormEvent){e.preventDefault();if(!supabase)return;setBusy(true);setMsg("");const r=mode==="signup"?await supabase.auth.signUp({email,password}):await supabase.auth.signInWithPassword({email,password});setBusy(false);if(r.error)setMsg(r.error.message);else if(mode==="signup"&&!r.data.session)setMsg("Cadastro iniciado. Confira seu e-mail para confirmar a conta.");else setMsg("Acesso realizado.")}
  async function addTx(e: FormEvent) {
   e.preventDefault();
