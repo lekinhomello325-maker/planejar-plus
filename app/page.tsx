@@ -255,27 +255,31 @@ function editTx(t: Tx) {
 
   const payment = Number(answer.replace(",", "."));
 
-  if (!Number.isFinite(payment) || payment <= 0 || payment > remaining) {
-    setMsg("Informe um pagamento válido, dentro do saldo restante.");
+  if (
+    !Number.isFinite(payment) ||
+    payment <= 0 ||
+    payment > remaining
+  ) {
+    setMsg("Informe um pagamento válido.");
     return;
   }
 
   setBusy(true);
 
-  const { error } = await supabase
-    .from("debts")
-    .update({
-      paid_amount: Number(debt.paid_amount) + payment
-    })
-    .eq("id", debt.id)
-    .eq("user_id", session.user.id);
+  const { error } = await supabase.rpc(
+    "register_debt_payment",
+    {
+      p_debt_id: debt.id,
+      p_amount: payment
+    }
+  );
 
   setBusy(false);
 
   if (error) {
     setMsg("Erro ao registrar pagamento: " + error.message);
   } else {
-    setMsg("Pagamento registrado com sucesso!");
+    setMsg("Pagamento registrado e salvo no histórico!");
     await load();
   }
   }
