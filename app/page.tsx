@@ -23,6 +23,12 @@ export default function Home(){
  const [editingId,setEditingId]=useState<string|null>(null);
  const [editingGoalId,setEditingGoalId]=useState<string|null>(null);
  const [goalDeposit,setGoalDeposit]=useState("");
+  const [debtCreditor,setDebtCreditor]=useState("");
+const [debtDescription,setDebtDescription]=useState("");
+const [debtTotal,setDebtTotal]=useState("");
+const [debtPaid,setDebtPaid]=useState("0");
+const [debtDueDate,setDebtDueDate]=useState("");
+const [debtInstallments,setDebtInstallments]=useState("1");
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>data.subscription.unsubscribe()},[]);
  useEffect(()=>{if(session?.user)load();else{setTx([]);setGoals([])}},[session?.user?.id]);
  async function load(){
