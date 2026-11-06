@@ -811,6 +811,33 @@ const reportBalance=reportIncome-reportExpenses;
               >
                 Registrar pagamento
               </button>
+                            {openDebtHistory === d.id && (
+                <div className="categoryReport">
+                  <h3>Histórico de pagamentos</h3>
+
+                  {getDebtPayments(d.id).length === 0 ? (
+                    <p className="muted">
+                      Nenhum pagamento registrado.
+                    </p>
+                  ) : (
+                    <div className="list">
+                      {getDebtPayments(d.id).map(payment => (
+                        <div className="sectionHead" key={payment.id}>
+                          <span>
+                            {new Date(
+                              payment.payment_date + "T00:00:00"
+                            ).toLocaleDateString("pt-BR")}
+                          </span>
+
+                          <strong>
+                            {brl(Number(payment.amount))}
+                          </strong>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           );
         })}
