@@ -529,6 +529,63 @@ const reportBalance=reportIncome-reportExpenses;
     };
   });
 },[tx,reportMonth]);
+  
+const totalDebtAmount = debts.reduce(
+  (sum, debt) => sum + Number(debt.total_amount),
+  0
+);
+
+const totalDebtPaid = debts.reduce(
+  (sum, debt) => sum + Number(debt.paid_amount),
+  0
+);
+
+const totalDebtRemaining = debts.reduce(
+  (sum, debt) =>
+    sum + Math.max(
+      0,
+      Number(debt.total_amount) - Number(debt.paid_amount)
+    ),
+  0
+);
+
+const totalOpenDebts = debts.filter(
+  debt =>
+    Number(debt.total_amount) > Number(debt.paid_amount)
+).length;
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const nextSevenDays = new Date(today);
+nextSevenDays.setDate(today.getDate() + 7);
+
+const overdueDebts = debts.filter(debt => {
+  if (!debt.due_date) return false;
+
+  const remaining =
+    Number(debt.total_amount) - Number(debt.paid_amount);
+
+  const dueDate = new Date(debt.due_date + "T00:00:00");
+
+  return remaining > 0 && dueDate < today;
+}).length;
+
+const upcomingDebts = debts.filter(debt => {
+  if (!debt.due_date) return false;
+
+  const remaining =
+    Number(debt.total_amount) - Number(debt.paid_amount);
+
+  const dueDate = new Date(debt.due_date + "T00:00:00");
+
+  return (
+    remaining > 0 &&
+    dueDate >= today &&
+    dueDate <= nextSevenDays
+  );
+}).length;
+
  const reportCategoryTotals=useMemo(()=>{
   const totals:Record<string,number>={};
 
