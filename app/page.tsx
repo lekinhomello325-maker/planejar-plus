@@ -331,6 +331,32 @@ function editTx(t: Tx) {
     await load();
   }
     }
+    async function deleteDebt(debt: Debt) {
+  if (!supabase || !session?.user) return;
+
+  const confirmed = window.confirm(
+    `Tem certeza que deseja excluir a dívida de ${debt.creditor}? Todos os pagamentos do histórico também serão excluídos.`
+  );
+
+  if (!confirmed) return;
+
+  setBusy(true);
+
+  const { error } = await supabase
+    .from("debts")
+    .delete()
+    .eq("id", debt.id)
+    .eq("user_id", session.user.id);
+
+  setBusy(false);
+
+  if (error) {
+    setMsg("Erro ao excluir dívida: " + error.message);
+  } else {
+    setMsg("Dívida excluída com sucesso!");
+    await load();
+  }
+    }
 
   const answer = window.prompt(
     `Saldo restante: ${brl(remaining)}\nQuanto deseja pagar?`
