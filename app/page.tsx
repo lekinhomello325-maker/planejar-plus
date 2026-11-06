@@ -598,6 +598,25 @@ const upcomingDebts = debts.filter(debt => {
 
   return Object.entries(totals).sort((a,b)=>b[1]-a[1]);
 },[reportTx]);
+  const budgetAlerts = budgets
+  .filter(b => String(b.month).slice(0, 7) === reportMonth)
+  .map(b => {
+    const spent =
+      reportCategoryTotals.find(
+        ([category]) => category === b.category
+      )?.[1] || 0;
+
+    const limit = Number(b.monthly_limit);
+    const percent = limit > 0 ? (spent / limit) * 100 : 0;
+
+    return {
+      category: b.category,
+      spent,
+      limit,
+      percent
+    };
+  })
+  .filter(b => b.percent >= 80);
  if(!supabase)return <main className="shell"><section className="panel"><div className="brand">PLANEJAR<span>+</span></div><h1>Configure a conexão</h1><p>Copie .env.example para .env.local e preencha a URL base e a chave publicável do Supabase.</p></section></main>;
  return <main className="shell"><header className="top"><div><div className="brand">PLANEJAR<span>+</span></div><p>Sua vida financeira começa com um plano.</p></div>{session&&<button className="ghost" onClick={()=>supabase?.auth.signOut()}>Sair</button>}</header>
  {msg&&<div className="notice">{msg}</div>}
