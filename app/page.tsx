@@ -248,12 +248,14 @@ function editTx(t: Tx) {
     await load();
   }
   }
-  function getDebtPayments(debtId: string) {
+  
+function getDebtPayments(debtId: string) {
   return debtPayments.filter(
     payment => payment.debt_id === debtId
   );
-  }
-  async function registerDebtPayment(debt: Debt) {
+}
+
+async function registerDebtPayment(debt: Debt) {
   if (!supabase || !session?.user) return;
 
   const remaining =
@@ -263,28 +265,60 @@ function editTx(t: Tx) {
     setMsg("Esta dívida já está quitada.");
     return;
   }
-    async function editDebt(debt: Debt) {
-  if (!supabase || !session?.user) return;
 
-  const creditor = window.prompt(
-    "Nome do credor:",
-    debt.creditor
+  const answer = window.prompt(
+    `Saldo restante: ${brl(remaining)}\nQuanto deseja pagar?`
   );
 
+  if (answer === null) return;
+
+  const payment = Number(answer.replace(",", "."));
+
+  if (
+    !Number.isFinite(payment) ||
+    payment <= 0 ||
+    payment > remaining
+  ) {
+    setMsg("Informe um pagamento válido.");
+    return;
+  }
+
+  setBusy(true);
+
+  const { error } = await supabase.rpc(
+    "register_debt_payment",
+    {
+      p_debt_id: debt.id,
+      p_amount: payment
+    }
+  );
+
+  setBusy(false);
+
+  if (error) {
+    setMsg("Erro ao registrar pagamento: " + error.message);
+  } else {
+    setMsg("Pagamento registrado e salvo no histórico!");
+    await load();
+  }
+}
+
+async function editDebt(debt: Debt) {
+  if (!supabase || !session?.user) return;
+
+  const creditor = window.prompt("Nome do credor:", debt.creditor);
   if (creditor === null) return;
 
   const description = window.prompt(
     "Descrição da dívida:",
     debt.description || ""
   );
-
   if (description === null) return;
 
   const total = window.prompt(
     "Valor total da dívida:",
     String(debt.total_amount)
   );
-
   if (total === null) return;
 
   const totalAmount = Number(total.replace(",", "."));
@@ -302,15 +336,15 @@ function editTx(t: Tx) {
     "Vencimento (AAAA-MM-DD):",
     debt.due_date || ""
   );
-
   if (dueDate === null) return;
 
   const installments = window.prompt(
     "Quantidade de parcelas:",
     String(debt.installments)
   );
-
   if (installments === null) return;
+
+  setBusy(true);
 
   const { error } = await supabase
     .from("debts")
@@ -324,14 +358,17 @@ function editTx(t: Tx) {
     .eq("id", debt.id)
     .eq("user_id", session.user.id);
 
+  setBusy(false);
+
   if (error) {
     setMsg("Erro ao editar dívida: " + error.message);
   } else {
     setMsg("Dívida atualizada com sucesso!");
     await load();
   }
-    }
-    async function deleteDebt(debt: Debt) {
+}
+
+async function deleteDebt(debt: Debt) {
   if (!supabase || !session?.user) return;
 
   const confirmed = window.confirm(
@@ -356,7 +393,8 @@ function editTx(t: Tx) {
     setMsg("Dívida excluída com sucesso!");
     await load();
   }
-    }
+}
+
 
   const answer = window.prompt(
     `Saldo restante: ${brl(remaining)}\nQuanto deseja pagar?`
