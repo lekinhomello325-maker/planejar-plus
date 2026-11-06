@@ -263,6 +263,74 @@ function editTx(t: Tx) {
     setMsg("Esta dívida já está quitada.");
     return;
   }
+    async function editDebt(debt: Debt) {
+  if (!supabase || !session?.user) return;
+
+  const creditor = window.prompt(
+    "Nome do credor:",
+    debt.creditor
+  );
+
+  if (creditor === null) return;
+
+  const description = window.prompt(
+    "Descrição da dívida:",
+    debt.description || ""
+  );
+
+  if (description === null) return;
+
+  const total = window.prompt(
+    "Valor total da dívida:",
+    String(debt.total_amount)
+  );
+
+  if (total === null) return;
+
+  const totalAmount = Number(total.replace(",", "."));
+
+  if (
+    !Number.isFinite(totalAmount) ||
+    totalAmount <= 0 ||
+    totalAmount < Number(debt.paid_amount)
+  ) {
+    setMsg("O valor total não pode ser menor que o valor já pago.");
+    return;
+  }
+
+  const dueDate = window.prompt(
+    "Vencimento (AAAA-MM-DD):",
+    debt.due_date || ""
+  );
+
+  if (dueDate === null) return;
+
+  const installments = window.prompt(
+    "Quantidade de parcelas:",
+    String(debt.installments)
+  );
+
+  if (installments === null) return;
+
+  const { error } = await supabase
+    .from("debts")
+    .update({
+      creditor: creditor.trim(),
+      description: description.trim() || null,
+      total_amount: totalAmount,
+      due_date: dueDate || null,
+      installments: Math.max(1, Number(installments) || 1)
+    })
+    .eq("id", debt.id)
+    .eq("user_id", session.user.id);
+
+  if (error) {
+    setMsg("Erro ao editar dívida: " + error.message);
+  } else {
+    setMsg("Dívida atualizada com sucesso!");
+    await load();
+  }
+    }
 
   const answer = window.prompt(
     `Saldo restante: ${brl(remaining)}\nQuanto deseja pagar?`
