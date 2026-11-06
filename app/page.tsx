@@ -789,6 +789,19 @@ const reportBalance=reportIncome-reportExpenses;
                 Parcelas: {d.installments}
               </p>
               <button
+                <button
+  type="button"
+  className="secondary"
+  onClick={() =>
+    setOpenDebtHistory(
+      openDebtHistory === d.id ? null : d.id
+    )
+  }
+>
+  {openDebtHistory === d.id
+    ? "Fechar histórico"
+    : "Ver histórico"}
+</button>
   type="button"
   className="secondary"
   disabled={busy || remaining <= 0}
