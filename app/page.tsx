@@ -665,43 +665,59 @@ const upcomingDebts = debts.filter(debt => {
    )}
 </div>
 
-<div className="categoryReport">
-  <h3>Evolução financeira — últimos 6 meses</h3>
 
-  {monthlyEvolution.map(m => {
-    const maxValue = Math.max(
-      ...monthlyEvolution.map(item =>
-        Math.max(item.income, item.expenses)
-      ),
-      1
-    );
-
-    return (
-      <div className="goal" key={m.month}>
-        <div className="sectionHead">
-          <strong>{m.label}</strong>
-          <strong>Saldo: {brl(m.balance)}</strong>
-        </div>
-
-        <p>Receitas: {brl(m.income)}</p>
-        <div className="bar">
-          <span style={{
-            width: `${m.income / maxValue * 100}%`,
-            background: "#22c55e"
-          }} />
-        </div>
-
-        <p>Despesas: {brl(m.expenses)}</p>
-        <div className="bar">
-          <span style={{
-            width: `${m.expenses / maxValue * 100}%`,
-            background: "#ef4444"
-          }} />
-        </div>
+<div className="categoryReport evolutionPanel">
+  <details className="evolutionDetails">
+    <summary>
+      <div>
+        <strong>Evolução financeira</strong>
+        <p className="muted">
+          Acompanhe seus últimos 6 meses
+        </p>
       </div>
-    );
-  })}
+      <span className="evolutionArrow">⌄</span>
+    </summary>
+
+    <div className="evolutionMonths">
+      <h3>Últimos 6 meses</h3>
+
+      {monthlyEvolution.map(m => {
+        const maxValue = Math.max(
+          ...monthlyEvolution.map(item =>
+            Math.max(item.income, item.expenses)
+          ),
+          1
+        );
+
+        return (
+          <div className="goal" key={m.month}>
+            <div className="sectionHead">
+              <strong>{m.label}</strong>
+              <strong>Saldo: {brl(m.balance)}</strong>
+            </div>
+
+            <p>Receitas: {brl(m.income)}</p>
+            <div className="bar">
+              <span style={{
+                width: `${m.income / maxValue * 100}%`,
+                background: "#22c55e"
+              }} />
+            </div>
+
+            <p>Despesas: {brl(m.expenses)}</p>
+            <div className="bar">
+              <span style={{
+                width: `${m.expenses / maxValue * 100}%`,
+                background: "#ef4444"
+              }} />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </details>
 </div>
+
 </section> 
   <section className="grid">
   <article className="panel">
