@@ -653,6 +653,43 @@ const upcomingDebts = debts.filter(debt => {
     </article>
   </section>
    <div className="categoryReport">
+  <h3>🔔 Alertas de orçamento</h3>
+
+  {budgetAlerts.length === 0 ? (
+    <p className="muted">
+      Todos os orçamentos estão sob controle!
+    </p>
+  ) : (
+    <div className="list">
+      {budgetAlerts.map(alert => (
+        <div className="goal" key={alert.category}>
+          <div className="sectionHead">
+            <strong>{alert.category}</strong>
+            <strong style={{
+              color: alert.percent >= 100 ? "#ef4444" : "#eab308"
+            }}>
+              {alert.percent.toFixed(0)}%
+            </strong>
+          </div>
+
+          <p>
+            Gasto: {brl(alert.spent)} de {brl(alert.limit)}
+          </p>
+
+          <p style={{
+            color: alert.percent >= 100 ? "#ef4444" : "#eab308",
+            fontWeight: 700
+          }}>
+            {alert.percent >= 100
+              ? "⚠️ Orçamento ultrapassado ou atingido!"
+              : "⚠️ Atenção: orçamento próximo do limite!"}
+          </p>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+    <div className="categoryReport">
   <h3>Despesas por categoria</h3>
 
   {reportCategoryTotals.length===0 ? (
