@@ -404,42 +404,6 @@ async function deleteDebt(debt: Debt) {
 }
 
 
-  const answer = window.prompt(
-    `Saldo restante: ${brl(remaining)}\nQuanto deseja pagar?`
-  );
-
-  if (answer === null) return;
-
-  const payment = Number(answer.replace(",", "."));
-
-  if (
-    !Number.isFinite(payment) ||
-    payment <= 0 ||
-    payment > remaining
-  ) {
-    setMsg("Informe um pagamento válido.");
-    return;
-  }
-
-  setBusy(true);
-
-  const { error } = await supabase.rpc(
-    "register_debt_payment",
-    {
-      p_debt_id: debt.id,
-      p_amount: payment
-    }
-  );
-
-  setBusy(false);
-
-  if (error) {
-    setMsg("Erro ao registrar pagamento: " + error.message);
-  } else {
-    setMsg("Pagamento registrado e salvo no histórico!");
-    await load();
-  }
-  }
  function editGoal(g: Goal) {
   setEditingGoalId(g.id);
   setGoalName(g.name);
