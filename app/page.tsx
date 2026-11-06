@@ -248,8 +248,8 @@ function editTx(t: Tx) {
     await load();
   }
   }
-  
-function getDebtPayments(debtId: string) {
+
+  function getDebtPayments(debtId: string) {
   return debtPayments.filter(
     payment => payment.debt_id === debtId
   );
@@ -306,19 +306,25 @@ async function registerDebtPayment(debt: Debt) {
 async function editDebt(debt: Debt) {
   if (!supabase || !session?.user) return;
 
-  const creditor = window.prompt("Nome do credor:", debt.creditor);
+  const creditor = window.prompt(
+    "Nome do credor:",
+    debt.creditor
+  );
+
   if (creditor === null) return;
 
   const description = window.prompt(
     "Descrição da dívida:",
     debt.description || ""
   );
+
   if (description === null) return;
 
   const total = window.prompt(
     "Valor total da dívida:",
     String(debt.total_amount)
   );
+
   if (total === null) return;
 
   const totalAmount = Number(total.replace(",", "."));
@@ -336,12 +342,14 @@ async function editDebt(debt: Debt) {
     "Vencimento (AAAA-MM-DD):",
     debt.due_date || ""
   );
+
   if (dueDate === null) return;
 
   const installments = window.prompt(
     "Quantidade de parcelas:",
     String(debt.installments)
   );
+
   if (installments === null) return;
 
   setBusy(true);
