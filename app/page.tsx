@@ -785,29 +785,32 @@ const reportBalance=reportIncome-reportExpenses;
 
               <p>{progress.toFixed(0)}% pago</p>
 
-              <p>
+                            <p>
                 Parcelas: {d.installments}
               </p>
+
               <button
-  type="button"
-  className="secondary"
-  onClick={() =>
-    setOpenDebtHistory(
-      openDebtHistory === d.id ? null : d.id
-    )
-  }
->
-  {openDebtHistory === d.id
-    ? "Fechar histórico"
-    : "Ver histórico"}
-</button>
-  type="button"
-  className="secondary"
-  disabled={busy || remaining <= 0}
-  onClick={() => registerDebtPayment(d)}
->
-  Registrar pagamento
-</button>
+                type="button"
+                className="secondary"
+                onClick={() =>
+                  setOpenDebtHistory(
+                    openDebtHistory === d.id ? null : d.id
+                  )
+                }
+              >
+                {openDebtHistory === d.id
+                  ? "Fechar histórico"
+                  : "Ver histórico"}
+              </button>
+
+              <button
+                type="button"
+                className="secondary"
+                disabled={busy || remaining <= 0}
+                onClick={() => registerDebtPayment(d)}
+              >
+                Registrar pagamento
+              </button>
             </div>
           );
         })}
