@@ -905,6 +905,25 @@ const reportBalance=reportIncome-reportExpenses;
               >
                 Registrar pagamento
               </button>
+              <div className="two">
+  <button
+    type="button"
+    className="secondary"
+    disabled={busy}
+    onClick={() => editDebt(d)}
+  >
+    Editar dívida
+  </button>
+
+  <button
+    type="button"
+    className="secondary"
+    disabled={busy}
+    onClick={() => deleteDebt(d)}
+  >
+    Excluir dívida
+  </button>
+</div>
                             {openDebtHistory === d.id && (
                 <div className="categoryReport">
                   <h3>Histórico de pagamentos</h3>
