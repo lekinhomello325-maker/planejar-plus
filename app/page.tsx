@@ -925,7 +925,67 @@ const upcomingDebts = debts.filter(debt => {
     </form>
 
   <div className="categoryReport">
-    
+    <div className="categoryReport">
+  <h3>🔔 Alertas financeiros</h3>
+
+  {debts.filter(d => {
+    if (!d.due_date) return false;
+
+    const remaining =
+      Number(d.total_amount) - Number(d.paid_amount);
+
+    const dueDate = new Date(d.due_date + "T00:00:00");
+
+    return remaining > 0 &&
+      dueDate <= nextSevenDays;
+  }).length === 0 ? (
+    <p className="muted">
+      Nenhum vencimento próximo.
+    </p>
+  ) : (
+    <div className="list">
+      {debts.filter(d => {
+        if (!d.due_date) return false;
+
+        const remaining =
+          Number(d.total_amount) - Number(d.paid_amount);
+
+        const dueDate = new Date(d.due_date + "T00:00:00");
+
+        return remaining > 0 &&
+          dueDate <= nextSevenDays;
+      }).map(d => {
+        const dueDate = new Date(d.due_date! + "T00:00:00");
+
+        const atrasada = dueDate < today;
+
+        return (
+          <div className="goal" key={d.id}>
+            <div className="sectionHead">
+              <strong>{d.creditor}</strong>
+              <strong>
+                {brl(Number(d.total_amount) - Number(d.paid_amount))}
+              </strong>
+            </div>
+
+            <p>
+              Vencimento: {dueDate.toLocaleDateString("pt-BR")}
+            </p>
+
+            <p style={{
+              color: atrasada ? "#ef4444" : "#eab308",
+              fontWeight: 700
+            }}>
+              {atrasada
+                ? "⚠️ Dívida atrasada"
+                : "🔔 Vence nos próximos 7 dias"}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
   <h3>Resumo das dívidas</h3>
 
   <div className="list">
