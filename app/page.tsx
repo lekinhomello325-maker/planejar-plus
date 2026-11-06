@@ -909,6 +909,54 @@ const upcomingDebts = debts.filter(debt => {
     </form>
 
   <div className="categoryReport">
+    
+  <h3>Resumo das dívidas</h3>
+
+  <div className="list">
+    <div className="goal">
+      <div className="sectionHead">
+        <span>Total de dívidas cadastradas</span>
+        <strong>{debts.length}</strong>
+      </div>
+      <p>Em aberto: {totalOpenDebts}</p>
+    </div>
+
+    <div className="goal">
+      <div className="sectionHead">
+        <span>Valor total das dívidas</span>
+        <strong>{brl(totalDebtAmount)}</strong>
+      </div>
+    </div>
+
+    <div className="goal">
+      <div className="sectionHead">
+        <span>Total já pago</span>
+        <strong>{brl(totalDebtPaid)}</strong>
+      </div>
+    </div>
+
+    <div className="goal">
+      <div className="sectionHead">
+        <span>Saldo restante</span>
+        <strong>{brl(totalDebtRemaining)}</strong>
+      </div>
+    </div>
+
+    <div className="goal">
+      <div className="sectionHead">
+        <span>Dívidas atrasadas</span>
+        <strong>{overdueDebts}</strong>
+      </div>
+    </div>
+
+    <div className="goal">
+      <div className="sectionHead">
+        <span>Vencem nos próximos 7 dias</span>
+        <strong>{upcomingDebts}</strong>
+      </div>
+    </div>
+  </div>
+
     <h3>Minhas dívidas</h3>
 
     {debts.length === 0 ? (
