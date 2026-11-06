@@ -789,7 +789,6 @@ const reportBalance=reportIncome-reportExpenses;
                 Parcelas: {d.installments}
               </p>
               <button
-                <button
   type="button"
   className="secondary"
   onClick={() =>
