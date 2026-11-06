@@ -672,40 +672,6 @@ const upcomingDebts = debts.filter(debt => {
  {msg&&<div className="notice">{msg}</div>}
  {!session?<section className="panel auth"><p className="eyebrow">SEU PLANEJAMENTO COMEÇA AQUI</p><h1>{mode==="login"?"Bem-vindo de volta":"Crie sua conta"}</h1><form className="stack" onSubmit={auth}><label>E-mail<input type="email" required value={email} onChange={e=>setEmail(e.target.value)} placeholder="voce@email.com"/></label><label>Senha<input type="password" minLength={8} required value={password} onChange={e=>setPassword(e.target.value)} placeholder="Mínimo de 8 caracteres"/></label><button className="primary" disabled={busy}>{busy?"Aguarde...":mode==="login"?"Entrar":"Criar conta"}</button></form><button className="textButton" onClick={()=>setMode(mode==="login"?"signup":"login")}>{mode==="login"?"Ainda não tem conta? Cadastre-se":"Já tem conta? Entrar"}</button><p className="small">Pode ser necessário confirmar seu e-mail antes do primeiro acesso.</p></section>:<>
  <section className="welcome"><p className="eyebrow">VISÃO GERAL</p><h1>Seu dinheiro, com direção.</h1><p>Organize. Planeje. Conquiste.</p></section>
- <section className="panel">
-  <h2>🔔 Central de Notificações</h2>
-
-  <div className="list">
-    <div className="goal">
-      <div className="sectionHead">
-        <strong>🔴 Dívidas atrasadas</strong>
-        <strong>{overdueDebts}</strong>
-      </div>
-    </div>
-
-    <div className="goal">
-      <div className="sectionHead">
-        <strong>🟡 Vencimentos próximos</strong>
-        <strong>{upcomingDebts}</strong>
-      </div>
-    </div>
-
-    <div className="goal">
-      <div className="sectionHead">
-        <strong>🟠 Alertas de orçamento</strong>
-        <strong>{budgetAlerts.length}</strong>
-      </div>
-    </div>
-  </div>
-
-  {overdueDebts === 0 &&
-   upcomingDebts === 0 &&
-   budgetAlerts.length === 0 && (
-    <p className="muted">
-      Tudo em ordem! Você não possui novos alertas.
-    </p>
-  )}
-</section>
    <section className="stats"><article className="stat"><span>Saldo dos lançamentos</span><strong>{brl(income-expenses)}</strong></article><article className="stat"><span>Receitas</span><strong className="positive">{brl(income)}</strong></article><article className="stat"><span>Despesas</span><strong className="negative">{brl(expenses)}</strong></article></section>
   <section className="panel">
   <p className="eyebrow">ANÁLISE FINANCEIRA</p>
