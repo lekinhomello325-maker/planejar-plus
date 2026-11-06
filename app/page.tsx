@@ -247,6 +247,11 @@ function editTx(t: Tx) {
     await load();
   }
   }
+  function getDebtPayments(debtId: string) {
+  return debtPayments.filter(
+    payment => payment.debt_id === debtId
+  );
+  }
   async function registerDebtPayment(debt: Debt) {
   if (!supabase || !session?.user) return;
 
