@@ -128,3 +128,85 @@
     font-size: 15px;
   }
 }
+
+/* CENTRAL DE NOTIFICAÇÕES PREMIUM */
+
+.topActions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notificationButton {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid #286047;
+  background: linear-gradient(145deg, #173c2b, #10251b);
+  color: #54e5a2;
+  font-size: 21px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px #0003;
+}
+
+.notificationButton:active {
+  transform: scale(.94);
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 20px;
+  background: #ef4444;
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #10251b;
+}
+
+.notificationPanel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 100;
+  width: min(310px, calc(100vw - 36px));
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #183629, #0c1d16);
+  border: 1px solid #286047;
+  box-shadow: 0 15px 40px #0008;
+}
+
+.notificationPanel h3 {
+  color: #54e5a2;
+  font-size: 16px;
+  margin: 0 0 15px;
+}
+
+.notificationPanel p {
+  color: #e5eee8;
+  font-size: 13px;
+  padding: 10px 0;
+  margin: 0;
+  border-bottom: 1px solid #ffffff15;
+}
+
+@media(max-width:420px) {
+  .topActions {
+    gap: 7px;
+  }
+
+  .notificationButton {
+    width: 40px;
+    height: 40px;
+  }
+}
