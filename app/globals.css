@@ -70,3 +70,61 @@
     font-size: 16px;
   }
 }
+/* EVOLUÇÃO FINANCEIRA EXPANSÍVEL */
+
+.evolutionDetails summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+  padding: 5px 0;
+}
+
+.evolutionDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+.evolutionDetails summary strong {
+  color: #f3f7f4;
+  font-size: 16px;
+}
+
+.evolutionDetails summary p {
+  margin: 5px 0 0;
+  font-size: 12px;
+}
+
+.evolutionArrow {
+  color: #20d68a;
+  font-size: 28px;
+  transition: transform .2s ease;
+}
+
+.evolutionDetails[open] .evolutionArrow {
+  transform: rotate(180deg);
+}
+
+.evolutionMonths {
+  margin-top: 18px;
+}
+
+.evolutionMonths h3 {
+  font-size: 15px;
+  color: #20d68a;
+}
+
+.evolutionMonths .goal:first-child {
+  border-top: 1px solid #254236;
+}
+
+@media(max-width:700px) {
+  .evolutionPanel {
+    padding: 16px;
+  }
+
+  .evolutionDetails summary strong {
+    font-size: 15px;
+  }
+}
