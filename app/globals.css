@@ -262,3 +262,12 @@
 body {
   padding-bottom: 95px;
 }
+/* AJUSTE DA NAVEGAÇÃO */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+section[id] {
+  scroll-margin-top: 24px;
+}
