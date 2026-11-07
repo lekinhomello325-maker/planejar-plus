@@ -1545,5 +1545,31 @@ const upcomingDebts = debts.filter(debt => {
     </div>
   )}
 </section>
+   <nav className="bottomNav" aria-label="Navegação principal">
+  <a href="#inicio">
+    <span>⌂</span>
+    <small>Início</small>
+  </a>
+
+  <a href="#movimentacoes">
+    <span>⇄</span>
+    <small>Lançamentos</small>
+  </a>
+
+  <a href="#relatorios">
+    <span>▥</span>
+    <small>Relatórios</small>
+  </a>
+
+  <a href="#dividas">
+    <span>▤</span>
+    <small>Dívidas</small>
+  </a>
+
+  <a href="#metas">
+    <span>◎</span>
+    <small>Metas</small>
+  </a>
+</nav>
  </>}<footer>PLANEJAR+ · Organize. Planeje. Conquiste.</footer></main>
 }
