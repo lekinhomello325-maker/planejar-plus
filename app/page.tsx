@@ -1357,7 +1357,7 @@ const upcomingDebts = debts.filter(debt => {
      )}
   </section>
   
- <section className="panel">
+ <section className="panel" id="metas">
   <p className="eyebrow">SEUS OBJETIVOS</p>
   <h2>Metas cadastradas</h2>
 
