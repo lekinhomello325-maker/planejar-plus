@@ -951,7 +951,7 @@ const upcomingDebts = debts.filter(debt => {
   </form>
     </article>
 </section>
-   <section className="panel">
+   <section className="panel" id="dividas">
   <p className="eyebrow">CONTROLE FINANCEIRO</p>
   <h2>Controle de dívidas</h2>
   <p className="muted">
