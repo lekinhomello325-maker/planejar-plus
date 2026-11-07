@@ -271,3 +271,21 @@ html {
 section[id] {
   scroll-margin-top: 24px;
 }
+/* DESTAQUE DA OPÇÃO SELECIONADA */
+.bottomNav a {
+  transition: all 0.25s ease;
+}
+
+body:has(#inicio:target) .bottomNav a[href="#inicio"],
+body:has(#movimentacoes:target) .bottomNav a[href="#movimentacoes"],
+body:has(#relatorios:target) .bottomNav a[href="#relatorios"],
+body:has(#dividas:target) .bottomNav a[href="#dividas"],
+body:has(#metas:target) .bottomNav a[href="#metas"] {
+  color: #42e68b;
+  background: rgba(66, 230, 139, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(66, 230, 139, 0.25);
+}
+
+.bottomNav a:active {
+  transform: scale(0.94);
+}
