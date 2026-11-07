@@ -317,3 +317,27 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
   color: #d5f5e2;
   font-weight: 600;
 }
+/* CARTÕES DE RECEITAS E DESPESAS */
+.stats .stat:not(.balanceCard) {
+  background: linear-gradient(145deg, #10251b, #0a1711);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.stats .stat:not(.balanceCard):hover {
+  transform: translateY(-3px);
+  border-color: rgba(66, 230, 139, 0.3);
+}
+
+.stats .stat:not(.balanceCard) span {
+  color: #b6c8bd;
+  font-weight: 600;
+}
+
+.stats .stat:not(.balanceCard) strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 23px;
+  font-weight: 800;
+}
