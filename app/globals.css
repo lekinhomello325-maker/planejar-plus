@@ -289,3 +289,31 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
 .bottomNav a:active {
   transform: scale(0.94);
 }
+/* CARTÃO DE SALDO EM DESTAQUE */
+.balanceCard {
+  background: linear-gradient(135deg, #103d29, #071b13) !important;
+  border: 1px solid rgba(66, 230, 139, 0.45);
+  box-shadow: 0 8px 28px rgba(25, 180, 95, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.balanceCard strong {
+  color: #42e68b;
+  font-size: clamp(27px, 5vw, 38px);
+  font-weight: 800;
+  display: block;
+  margin-top: 12px;
+}
+
+.balanceCard small {
+  display: block;
+  color: #a8cbb7;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.balanceCard span {
+  color: #d5f5e2;
+  font-weight: 600;
+}
