@@ -210,3 +210,55 @@
     height: 40px;
   }
 }
+/* BARRA DE NAVEGAÇÃO INFERIOR */
+.bottomNav {
+  position: fixed;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(680px, calc(100% - 24px));
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  background: rgba(7, 19, 15, 0.96);
+  border: 1px solid rgba(80, 220, 140, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
+}
+
+.bottomNav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #9aafa4;
+  text-decoration: none;
+  padding: 5px 2px;
+  border-radius: 12px;
+  transition: 0.2s ease;
+}
+
+.bottomNav a span {
+  font-size: 23px;
+  line-height: 1;
+}
+
+.bottomNav a small {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.bottomNav a:hover {
+  color: #42e68b;
+  background: rgba(66, 230, 139, 0.10);
+}
+
+body {
+  padding-bottom: 95px;
+}
