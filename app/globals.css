@@ -539,3 +539,144 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     gap: 12px;
   }
 }
+/* GRAFICO FINANCEIRO PREMIUM */
+
+.financeChart {
+  margin: 22px 0;
+  padding: 22px;
+  background: linear-gradient(145deg, #10291e, #091a12);
+  border: 1px solid #28503b;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px #0003;
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.chartHeader strong {
+  color: #f3f7f4;
+  font-size: 16px;
+}
+
+.chartHeader span {
+  color: #8fa99a;
+  font-size: 11px;
+}
+
+.chartLegend {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.chartLegend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #b6c8bd;
+  font-size: 12px;
+}
+
+.chartLegend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.legendIncome {
+  background: #20d68a;
+}
+
+.legendExpense {
+  background: #ef7777;
+}
+
+.chartBars {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  height: 190px;
+  align-items: end;
+  border-bottom: 1px solid #315342;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 46px,
+    rgba(255,255,255,.045) 47px
+  );
+}
+
+.chartMonth {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 0;
+}
+
+.chartColumns {
+  height: calc(100% - 25px);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+}
+
+.chartBar {
+  width: 30%;
+  max-width: 25px;
+  min-width: 5px;
+  border-radius: 5px 5px 0 0;
+  transition: height .4s ease;
+}
+
+.chartIncome {
+  background: linear-gradient(180deg, #54e5a2, #0d9b67);
+  box-shadow: 0 0 12px #20d68a30;
+}
+
+.chartExpense {
+  background: linear-gradient(180deg, #ff9991, #b94e4e);
+}
+
+.chartMonth small {
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9eafa6;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+@media(max-width:500px) {
+  .financeChart {
+    padding: 14px;
+  }
+
+  .chartBars {
+    gap: 3px;
+    height: 160px;
+  }
+
+  .chartColumns {
+    gap: 3px;
+  }
+
+  .chartMonth small {
+    font-size: 9px;
+  }
+
+  .chartBar {
+    width: 35%;
+  }
+}
