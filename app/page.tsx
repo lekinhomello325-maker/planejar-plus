@@ -693,7 +693,12 @@ const upcomingDebts = debts.filter(debt => {
       PLANEJAR<span>+</span>
     </div>
     <p>Sua vida financeira começa com um plano.</p>
-  </div>
+
+{session && profileName.trim() && (
+  <p className="profileGreeting">
+    Olá, {profileName}!
+  </p>
+)}
 
   {session && (
     <div className="topActions">
