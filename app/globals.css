@@ -452,3 +452,90 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     display: none;
   }
 }
+/* DASHBOARD PREMIUM - CARTOES FINANCEIROS */
+
+.stats {
+  gap: 16px;
+}
+
+.stat {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  border-radius: 20px;
+  background: linear-gradient(
+    145deg,
+    #172f25,
+    #0a1b13
+  );
+  border: 1px solid rgba(84, 229, 162, 0.16);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  transition: transform .25s ease, border-color .25s ease;
+}
+
+.stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(84, 229, 162, 0.45);
+}
+
+.stat span {
+  color: #a9beb2;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.stat strong {
+  font-size: clamp(22px, 2.5vw, 29px);
+  font-weight: 850;
+  letter-spacing: -0.5px;
+}
+
+.stat small {
+  color: #8fa99a;
+  font-size: 11px;
+}
+
+.balanceCard {
+  background: linear-gradient(
+    135deg,
+    #164c32,
+    #0b2117 80%
+  ) !important;
+  border: 1px solid rgba(84, 229, 162, 0.5);
+  box-shadow: 0 10px 35px rgba(32, 214, 138, 0.13);
+}
+
+.balanceCard::after {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  right: -55px;
+  top: -55px;
+  border-radius: 50%;
+  background: rgba(84, 229, 162, 0.08);
+}
+
+.stats .positive {
+  color: #54e5a2;
+}
+
+.stats .negative {
+  color: #ff9991;
+}
+
+@media (min-width: 900px) {
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .stat {
+    padding: 20px;
+  }
+
+  .stats {
+    gap: 12px;
+  }
+}
