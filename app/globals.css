@@ -680,3 +680,22 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     width: 35%;
   }
 }
+/* AJUSTE FINAL - ESPAÇO PARA MENU MOBILE */
+
+@media (max-width: 899px) {
+  body {
+    padding-bottom: 155px !important;
+  }
+
+  .bottomNav {
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+/* MANTER O ESPAÇAMENTO ORIGINAL NO PC */
+
+@media (min-width: 900px) {
+  body {
+    padding-bottom: 30px !important;
+  }
+}
