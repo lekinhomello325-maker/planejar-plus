@@ -80,7 +80,33 @@ useEffect(()=>{
 
   loadProfile();
 },[session?.user?.id]);
+// SALVAR PERFIL DO USUÁRIO
+async function saveProfile(){
+  if(!supabase || !session?.user) return;
 
+  if(!profileName.trim()){
+    setProfileMsg("Informe seu nome completo.");
+    return;
+  }
+
+  setProfileLoading(true);
+  setProfileMsg("");
+
+  const {error}=await supabase
+    .from("profiles")
+    .upsert({
+      id:session.user.id,
+      full_name:profileName.trim()
+    });
+
+  if(error){
+    setProfileMsg("Erro ao salvar perfil: "+error.message);
+  }else{
+    setProfileMsg("Perfil atualizado com sucesso!");
+  }
+
+  setProfileLoading(false);
+}
 async function load(){
   if(!supabase)return;
 
