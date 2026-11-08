@@ -341,3 +341,114 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
   font-size: 23px;
   font-weight: 800;
 }
+/* MENU LATERAL PREMIUM - PLANEJAR+ */
+
+.desktopNav {
+  display: none;
+}
+
+@media (min-width: 900px) {
+
+  body {
+    padding-bottom: 30px;
+  }
+
+  .shell {
+    width: calc(100% - 300px);
+    max-width: 1400px;
+    margin-left: 270px;
+    margin-right: 30px;
+    padding-top: 30px;
+  }
+
+  .desktopNav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    bottom: 20px;
+    width: 225px;
+    padding: 25px 16px;
+    background: linear-gradient(180deg, #10291e, #07150f);
+    border: 1px solid #254d3b;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px #0006;
+    z-index: 1000;
+  }
+
+  .desktopBrand {
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    color: #f3f7f4;
+    margin-bottom: 40px;
+  }
+
+  .desktopBrand span {
+    color: #20d68a;
+  }
+
+  .navLabel {
+    color: #829b8d;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin: 0 0 15px 10px;
+  }
+
+  .desktopNav > a {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 12px;
+    margin-bottom: 7px;
+    border-radius: 11px;
+    color: #b6c9be;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 650;
+    transition: .2s ease;
+  }
+
+  .desktopNav > a span {
+    font-size: 19px;
+    color: #54e5a2;
+  }
+
+  .desktopNav > a:hover,
+  .desktopNav > a:focus {
+    background: #1b3c2b;
+    color: #54e5a2;
+  }
+
+  body:has(#inicio:target) .desktopNav a[href="#inicio"],
+  body:has(#movimentacoes:target) .desktopNav a[href="#movimentacoes"],
+  body:has(#relatorios:target) .desktopNav a[href="#relatorios"],
+  body:has(#dividas:target) .desktopNav a[href="#dividas"],
+  body:has(#metas:target) .desktopNav a[href="#metas"] {
+    background: #19432f;
+    color: #54e5a2;
+    box-shadow: inset 3px 0 #20d68a;
+  }
+
+  .navFooter {
+    margin-top: auto;
+    padding: 15px 10px;
+    border-top: 1px solid #254d3b;
+    color: #54e5a2;
+    font-size: 12px;
+  }
+
+  .navFooter small {
+    display: block;
+    margin-top: 10px;
+    color: #829b8d;
+    font-size: 9px;
+    line-height: 1.5;
+  }
+
+  .bottomNav {
+    display: none;
+  }
+}
