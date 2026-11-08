@@ -1561,7 +1561,41 @@ const upcomingDebts = debts.filter(debt => {
     </div>
   )}
 </section>
-   <nav className="bottomNav" aria-label="Navegação principal">
+   
+<nav className="desktopNav" aria-label="Navegação para computador">
+  <div className="desktopBrand">
+    PLANEJAR<span>+</span>
+  </div>
+
+  <p className="navLabel">MENU PRINCIPAL</p>
+
+  <a href="#inicio">
+    <span>⌂</span> Dashboard
+  </a>
+
+  <a href="#movimentacoes">
+    <span>⇄</span> Lançamentos
+  </a>
+
+  <a href="#relatorios">
+    <span>▥</span> Relatórios
+  </a>
+
+  <a href="#dividas">
+    <span>▤</span> Dívidas
+  </a>
+
+  <a href="#metas">
+    <span>◎</span> Metas
+  </a>
+
+  <div className="navFooter">
+    <div>💚 Seu dinheiro, com direção.</div>
+    <small>PLANEJAR+ · Organize. Planeje. Conquiste.</small>
+  </div>
+</nav>
+
+<nav className="bottomNav" aria-label="Navegação principal">
   <a href="#inicio">
     <span>⌂</span>
     <small>Início</small>
@@ -1587,5 +1621,6 @@ const upcomingDebts = debts.filter(debt => {
     <small>Metas</small>
   </a>
 </nav>
+
  </>}<footer>PLANEJAR+ · Organize. Planeje. Conquiste.</footer></main>
 }
