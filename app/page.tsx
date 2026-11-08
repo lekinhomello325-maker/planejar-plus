@@ -802,6 +802,58 @@ const upcomingDebts = debts.filter(debt => {
 
     <div className="evolutionMonths">
       <h3>Últimos 6 meses</h3>
+      
+<div className="financeChart">
+  <div className="chartHeader">
+    <strong>Receitas x Despesas</strong>
+    <span>Últimos 6 meses</span>
+  </div>
+
+  <div className="chartLegend">
+    <span><i className="legendIncome" /> Receitas</span>
+    <span><i className="legendExpense" /> Despesas</span>
+  </div>
+
+  <div className="chartBars">
+    {monthlyEvolution.map(m => {
+      const maxValue = Math.max(
+        ...monthlyEvolution.flatMap(item => [
+          item.income,
+          item.expenses
+        ]),
+        1
+      );
+
+      return (
+        <div className="chartMonth" key={m.month}>
+          <div className="chartColumns">
+            <div
+              className="chartBar chartIncome"
+              style={{
+                height: `${m.income > 0
+                  ? Math.max(m.income / maxValue * 100, 3)
+                  : 0}%`
+              }}
+              title={`Receitas: ${brl(m.income)}`}
+            />
+
+            <div
+              className="chartBar chartExpense"
+              style={{
+                height: `${m.expenses > 0
+                  ? Math.max(m.expenses / maxValue * 100, 3)
+                  : 0}%`
+              }}
+              title={`Despesas: ${brl(m.expenses)}`}
+            />
+          </div>
+
+          <small>{m.label}</small>
+        </div>
+      );
+    })}
+  </div>
+</div>
 
       {monthlyEvolution.map(m => {
         const maxValue = Math.max(
