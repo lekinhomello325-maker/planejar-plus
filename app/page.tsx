@@ -44,8 +44,44 @@ const [debtPaid,setDebtPaid]=useState("0");
 const [debtDueDate,setDebtDueDate]=useState("");
 const [debtInstallments,setDebtInstallments]=useState("1");
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>data.subscription.unsubscribe()},[]);
- useEffect(()=>{if(session?.user)load();else{setTx([]);setGoals([])}},[session?.user?.id]);
- async function load(){
+ useEffect(()=>{
+  if(session?.user) load();
+  else {
+    setTx([]);
+    setGoals([]);
+  }
+},[session?.user?.id]);
+
+// CARREGAR PERFIL DO USUÁRIO
+useEffect(()=>{
+  async function loadProfile(){
+    if(!supabase || !session?.user){
+      setProfileName("");
+      return;
+    }
+
+    setProfileLoading(true);
+    setProfileMsg("");
+
+    const {data,error}=await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id",session.user.id)
+      .maybeSingle();
+
+    if(error){
+      setProfileMsg("Erro ao carregar perfil: "+error.message);
+    }else{
+      setProfileName(data?.full_name ?? "");
+    }
+
+    setProfileLoading(false);
+  }
+
+  loadProfile();
+},[session?.user?.id]);
+
+async function load(){
   if(!supabase)return;
 
   const [a,b,c,d,e]=await Promise.all([
