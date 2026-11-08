@@ -686,7 +686,8 @@ const upcomingDebts = debts.filter(debt => {
   })
   .filter(b => b.percent >= 80);
  if(!supabase)return <main className="shell"><section className="panel"><div className="brand">PLANEJAR<span>+</span></div><h1>Configure a conexão</h1><p>Copie .env.example para .env.local e preencha a URL base e a chave publicável do Supabase.</p></section></main>;
- return <main className="shell"><header className="top">
+ return <main className="shell">
+   <header className="top">
   <div>
     <div className="brand">
       PLANEJAR<span>+</span>
@@ -696,14 +697,28 @@ const upcomingDebts = debts.filter(debt => {
 
   {session && (
     <div className="topActions">
+
+      <button
+        type="button"
+        className="profileButton"
+        onClick={() => {
+          setShowProfile(!showProfile);
+          setShowNotifications(false);
+        }}
+      >
+        👤 Meu Perfil
+      </button>
+
       <button
         type="button"
         className="notificationButton"
-        onClick={() => setShowNotifications(!showNotifications)}
+        onClick={() => {
+          setShowNotifications(!showNotifications);
+          setShowProfile(false);
+        }}
         aria-label="Abrir notificações"
       >
         🔔
-
         {(overdueDebts + upcomingDebts + budgetAlerts.length) > 0 && (
           <span className="notificationBadge">
             {overdueDebts + upcomingDebts + budgetAlerts.length}
@@ -718,10 +733,45 @@ const upcomingDebts = debts.filter(debt => {
         Sair
       </button>
 
+      {showProfile && (
+        <div className="notificationPanel">
+          <h3>Meu Perfil</h3>
+
+          <p>
+            E-mail: {session.user.email}
+          </p>
+
+          <form className="stack" onSubmit={e => {
+            e.preventDefault();
+            saveProfile();
+          }}>
+            <label>
+              Nome completo
+              <input
+                type="text"
+                value={profileName}
+                onChange={e => setProfileName(e.target.value)}
+                placeholder="Digite seu nome"
+                required
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="primary"
+              disabled={profileLoading}
+            >
+              {profileLoading ? "Salvando..." : "Salvar perfil"}
+            </button>
+          </form>
+
+          {profileMsg && <p>{profileMsg}</p>}
+        </div>
+      )}
+
       {showNotifications && (
         <div className="notificationPanel">
           <h3>Central de notificações</h3>
-
           <p>🔴 Dívidas atrasadas: {overdueDebts}</p>
           <p>🟡 Vencimentos próximos: {upcomingDebts}</p>
           <p>🟠 Alertas de orçamento: {budgetAlerts.length}</p>
@@ -729,7 +779,7 @@ const upcomingDebts = debts.filter(debt => {
           {overdueDebts === 0 &&
            upcomingDebts === 0 &&
            budgetAlerts.length === 0 && (
-            <p> Tudo em ordem! Nenhum alerta no momento.</p>
+            <p>Tudo em ordem! Nenhum alerta no momento.</p>
           )}
         </div>
       )}
