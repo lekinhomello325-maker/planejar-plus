@@ -25,6 +25,11 @@ const brl=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"
 export default function Home(){
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[mode,setMode]=useState<"login"|"signup">("login"),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
   const [showNotifications,setShowNotifications]=useState(false);
+  // PERFIL DO USUÁRIO
+const [showProfile,setShowProfile]=useState(false);
+const [profileName,setProfileName]=useState("");
+const [profileLoading,setProfileLoading]=useState(false);
+const [profileMsg,setProfileMsg]=useState("");
  const [tx,setTx]=useState<Tx[]>([]),[goals,setGoals]=useState<Goal[]>([]),[budgets,setBudgets]=useState<Budget[]>([]),[debts,setDebts]=useState<Debt[]>([]);
  const [debtPayments,setDebtPayments]=useState<DebtPayment[]>([]);
  const [openDebtHistory,setOpenDebtHistory]=useState<string | null>(null); 
