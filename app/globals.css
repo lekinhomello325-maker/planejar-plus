@@ -753,36 +753,53 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
 @media (max-width: 700px) {
   .top {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
     margin-bottom: 22px;
   }
 
   .top > div:first-child {
-    width: 100%;
+    flex: 1;
     min-width: 0;
   }
 
   .top .brand {
-    font-size: 25px;
-    letter-spacing: 1.5px;
+    font-size: 23px;
+    letter-spacing: 1px;
     white-space: nowrap;
   }
 
   .top p {
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 11px;
+    line-height: 1.4;
     margin: 5px 0;
     white-space: normal;
   }
 
   .topActions {
-    width: 100%;
+    flex-shrink: 0;
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .profileButton {
+    padding: 8px 9px;
+    font-size: 10px;
+    border-radius: 9px;
+  }
+
+  .notificationButton {
+    width: 34px;
+    height: 34px;
+    font-size: 17px;
+    border-radius: 10px;
+  }
+
+  .topActions button {
+    white-space: nowrap;
   }
 }
