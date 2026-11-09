@@ -709,3 +709,33 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
   padding: 12px 15px;
   font-size: 13px;
 }
+
+/* CARTÕES FINANCEIROS COMPACTOS NO MOBILE */
+
+@media (max-width: 700px) {
+  .stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .stats .stat {
+    padding: 12px 9px;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .stats .stat span {
+    font-size: 10px;
+  }
+
+  .stats .stat strong {
+    font-size: clamp(12px, 3.4vw, 16px);
+    white-space: nowrap;
+  }
+
+  .stats .stat small {
+    font-size: 9px;
+    line-height: 1.3;
+  }
+}
+
