@@ -30,7 +30,12 @@ const [showProfile,setShowProfile]=useState(false);
 const [profileName,setProfileName]=useState("");
 const [profileLoading,setProfileLoading]=useState(false);
 const [profileMsg,setProfileMsg]=useState("");
- const [tx,setTx]=useState<Tx[]>([]),[goals,setGoals]=useState<Goal[]>([]),[budgets,setBudgets]=useState<Budget[]>([]),[debts,setDebts]=useState<Debt[]>([]);
+ // ALTERAÇÃO DE SENHA
+const [newPassword,setNewPassword]=useState("");
+const [confirmPassword,setConfirmPassword]=useState("");
+const [passwordMsg,setPasswordMsg]=useState("");
+const [passwordLoading,setPasswordLoading]=useState(false);
+  const [tx,setTx]=useState<Tx[]>([]),[goals,setGoals]=useState<Goal[]>([]),[budgets,setBudgets]=useState<Budget[]>([]),[debts,setDebts]=useState<Debt[]>([]);
  const [debtPayments,setDebtPayments]=useState<DebtPayment[]>([]);
  const [openDebtHistory,setOpenDebtHistory]=useState<string | null>(null); 
   const [desc,setDesc]=useState(""),[amount,setAmount]=useState(""),[kind,setKind]=useState<"income"|"expense">("expense"),[category,setCategory]=useState("Geral"),[goalName,setGoalName]=useState(""),[goalAmount,setGoalAmount]=useState(""),[budgetCategory,setBudgetCategory]=useState("Geral"),[budgetLimit,setBudgetLimit]=useState(""),[budgetMonth,setBudgetMonth]=useState(new Date().toISOString().slice(0,7)),[reportMonth,setReportMonth]=useState(new Date().toISOString().slice(0,7));
