@@ -812,6 +812,50 @@ const upcomingDebts = debts.filter(debt => {
           </form>
 
           {profileMsg && <p>{profileMsg}</p>}
+        
+<hr />
+
+<h3>Alterar senha</h3>
+
+<form className="stack" onSubmit={e => {
+  e.preventDefault();
+  updatePassword();
+}}>
+  <label>
+    Nova senha
+    <input
+      type="password"
+      value={newPassword}
+      onChange={e => setNewPassword(e.target.value)}
+      placeholder="Digite a nova senha"
+      minLength={8}
+      required
+    />
+  </label>
+
+  <label>
+    Confirmar nova senha
+    <input
+      type="password"
+      value={confirmPassword}
+      onChange={e => setConfirmPassword(e.target.value)}
+      placeholder="Digite novamente a senha"
+      minLength={8}
+      required
+    />
+  </label>
+
+  <button
+    type="submit"
+    className="primary"
+    disabled={passwordLoading}
+  >
+    {passwordLoading ? "Atualizando..." : "Alterar senha"}
+  </button>
+</form>
+
+{passwordMsg && <p>{passwordMsg}</p>}
+
         </div>
       )}
 
