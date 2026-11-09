@@ -748,3 +748,31 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     font-size: 23px;
   }
 }
+/* CABEÇALHO MOBILE - PLANEJAR+ */
+
+@media (max-width: 700px) {
+  .top {
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .top > div:first-child {
+    min-width: 0;
+  }
+
+  .top .brand {
+    font-size: 24px;
+  }
+
+  .top p {
+    font-size: 11px;
+    line-height: 1.4;
+    margin: 5px 0;
+  }
+
+  .topActions {
+    flex-shrink: 0;
+    gap: 7px;
+  }
+}
