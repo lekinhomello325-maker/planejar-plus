@@ -112,6 +112,39 @@ async function saveProfile(){
 
   setProfileLoading(false);
 }
+  
+// ALTERAR SENHA DO USUÁRIO
+async function updatePassword(){
+  if(!supabase || !session?.user) return;
+
+  if(newPassword.length < 8){
+    setPasswordMsg("A senha deve ter pelo menos 8 caracteres.");
+    return;
+  }
+
+  if(newPassword !== confirmPassword){
+    setPasswordMsg("As senhas não são iguais.");
+    return;
+  }
+
+  setPasswordLoading(true);
+  setPasswordMsg("");
+
+  const {error}=await supabase.auth.updateUser({
+    password:newPassword
+  });
+
+  if(error){
+    setPasswordMsg("Erro ao alterar senha: "+error.message);
+  }else{
+    setPasswordMsg("Senha alterada com sucesso!");
+    setNewPassword("");
+    setConfirmPassword("");
+  }
+
+  setPasswordLoading(false);
+}
+
 async function load(){
   if(!supabase)return;
 
