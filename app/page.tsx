@@ -117,10 +117,19 @@ async function saveProfile(){
 async function updatePassword(){
   if(!supabase || !session?.user) return;
 
-  if(newPassword.length < 8){
-    setPasswordMsg("A senha deve ter pelo menos 8 caracteres.");
-    return;
-  }
+if(
+  newPassword.length < 8 ||
+  !/[a-z]/.test(newPassword) ||
+  !/[A-Z]/.test(newPassword) ||
+  !/[0-9]/.test(newPassword) ||
+  !/[^A-Za-z0-9]/.test(newPassword)
+){
+  setPasswordMsg(
+    "Use pelo menos 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo."
+  );
+  return;
+}
+  
 
   if(newPassword !== confirmPassword){
     setPasswordMsg("As senhas não são iguais.");
