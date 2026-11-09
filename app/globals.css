@@ -728,10 +728,12 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     font-size: 10px;
   }
 
-  .stats .stat strong {
-    font-size: clamp(12px, 3.4vw, 16px);
-    white-space: nowrap;
-  }
+.stats .stat strong {
+  font-size: clamp(10px, 2.4vw, 12px);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  letter-spacing: -0.4px;
+}
 
   .stats .stat small {
     font-size: 9px;
