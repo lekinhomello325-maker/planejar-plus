@@ -907,3 +907,20 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
 .transactionForm button.primary:active {
   transform: scale(0.98);
 }
+/* FORMULARIO - AJUSTE MOBILE */
+
+@media (max-width: 700px) {
+  .transactionForm {
+    gap: 14px;
+  }
+
+  .transactionForm input,
+  .transactionForm select {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .transactionForm button.primary {
+    min-height: 45px;
+  }
+}
