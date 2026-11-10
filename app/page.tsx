@@ -1114,7 +1114,7 @@ const upcomingDebts = debts.filter(debt => {
     <p className="eyebrow">NOVO LANÇAMENTO</p>
     <h2>Registrar movimentação</h2>
 
-    <form className="stack" onSubmit={editingId ? updateTx : addTx}>
+    <form className="stack transactionForm" onSubmit={editingId ? updateTx : addTx}>
       <label>
         Descrição
         <input
