@@ -565,6 +565,7 @@ async function updateGoal(e: FormEvent) {
   }
 }
 
+
 async function addGoalDeposit(g: Goal) {
   if (!supabase || !session?.user) return;
 
@@ -576,29 +577,31 @@ async function addGoalDeposit(g: Goal) {
   }
 
   setBusy(true);
-  setMsg("Atualizando valor da meta...");
+  setMsg("Registrando contribuição...");
 
   try {
-    const { error } = await supabase
-      .from("goals")
-      .update({
-        current_amount: Number(g.current_amount) + value
-      })
-      .eq("id", g.id)
-      .eq("user_id", session.user.id);
+    const { error } = await supabase.rpc(
+      "register_goal_deposit",
+      {
+        p_goal_id: g.id,
+        p_amount: value
+      }
+    );
 
     if (error) {
-      setMsg("Erro ao adicionar valor: " + error.message);
+      setMsg("Erro ao registrar contribuição: " + error.message);
       return;
     }
 
     setGoalDeposit("");
-    setMsg("Valor adicionado à meta com sucesso!");
+    setMsg("Valor adicionado à meta e registrado nas despesas!");
     await load();
+
   } finally {
     setBusy(false);
   }
 }
+
  const income=useMemo(()=>tx.filter(x=>x.type==="income").reduce((s,x)=>s+Number(x.amount),0),[tx]),expenses=useMemo(()=>tx.filter(x=>x.type==="expense").reduce((s,x)=>s+Number(x.amount),0),[tx]);
  const reportTx=useMemo(
   ()=>tx.filter(x=>x.transaction_date?.slice(0,7)===reportMonth),
