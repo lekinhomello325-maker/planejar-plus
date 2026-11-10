@@ -1268,6 +1268,95 @@ const upcomingDebts = debts.filter(debt => {
       </button>
     )}
   </form>
+   
+  <p className="eyebrow">OBJETIVOS CADASTRADOS</p>
+  <h2>Seu progresso</h2>
+
+  {goals.length === 0 ? (
+    <p className="muted">Seus objetivos aparecerão aqui.</p>
+  ) : (
+    <div className="list">
+      {goals.map(g => (
+        <div className="goal" key={g.id}>
+          <div className="sectionHead">
+            <strong>{g.name}</strong>
+            <span>
+              {brl(Number(g.current_amount))} / {brl(Number(g.target_amount))}
+            </span>
+          </div>
+
+          <div className="bar">
+            <span
+              style={{
+                width: `${Math.min(
+                  100,
+                  Number(g.target_amount)
+                    ? Number(g.current_amount) / Number(g.target_amount) * 100
+                    : 0
+                )}%`
+              }}
+            />
+          </div>
+
+          <p className="muted">
+            {Math.min(
+              100,
+              Number(g.target_amount)
+                ? Number(g.current_amount) / Number(g.target_amount) * 100
+                : 0
+            ).toFixed(1)}% concluído
+          </p>
+
+          <p>
+            Faltam: {brl(Math.max(0, Number(g.target_amount) - Number(g.current_amount)))}
+          </p>
+
+          <form
+            className="stack"
+            onSubmit={e => {
+              e.preventDefault();
+              addGoalDeposit(g);
+            }}
+          >
+            <label>
+              Valor a adicionar (R$)
+              <input
+                type="number"
+                min="0.01"
+                step="0.01"
+                required
+                value={goalDeposit}
+                onChange={e => setGoalDeposit(e.target.value)}
+                placeholder="Ex.: 100,00"
+              />
+            </label>
+
+            <button type="submit" className="secondary" disabled={busy}>
+              Adicionar valor
+            </button>
+          </form>
+
+          <button
+            type="button"
+            className="ghost"
+            onClick={() => editGoal(g)}
+          >
+            Editar meta
+          </button>
+
+          <button
+            type="button"
+            className="delete"
+            onClick={() => removeGoal(g.id)}
+            disabled={busy}
+          >
+            Excluir meta
+          </button>
+        </div>
+      ))}
+    </div>
+  )}
+
     </article>
 </section>
    <section className="panel" id="dividas">
