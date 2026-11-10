@@ -1185,13 +1185,43 @@ const upcomingDebts = debts.filter(debt => {
         </label>
       </div>
 
-      <label>
-        Categoria
-        <input
-          value={category}
-          onChange={e => setCategory(e.target.value)}
-        />
-      </label>
+      
+<label>
+  Categoria
+  <input
+    list="transactionCategories"
+    value={category}
+    onChange={e => setCategory(e.target.value)}
+    placeholder="Escolha ou digite uma categoria"
+  />
+
+  <datalist id="transactionCategories">
+    {kind === "income" ? (
+      <>
+        <option value="Salário" />
+        <option value="Vendas" />
+        <option value="Serviços" />
+        <option value="Freelance" />
+        <option value="Rendimentos" />
+        <option value="Outros" />
+      </>
+    ) : (
+      <>
+        <option value="Alimentação" />
+        <option value="Moradia" />
+        <option value="Transporte" />
+        <option value="Saúde" />
+        <option value="Educação" />
+        <option value="Lazer" />
+        <option value="Contas" />
+        <option value="Dívidas" />
+        <option value="Metas" />
+        <option value="Outros" />
+      </>
+    )}
+  </datalist>
+</label>
+
 
       <button className="primary" disabled={busy}>
         {busy
