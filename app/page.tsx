@@ -1186,42 +1186,67 @@ const upcomingDebts = debts.filter(debt => {
       </div>
 
       
+
 <label>
   Categoria
-  <input
-    list="transactionCategories"
-    value={category}
-    onChange={e => setCategory(e.target.value)}
-    placeholder="Escolha ou digite uma categoria"
-  />
 
-  <datalist id="transactionCategories">
+  <select
+    value={
+      (kind === "income"
+        ? ["Salário", "Vendas", "Serviços", "Freelance", "Rendimentos", "Outros"]
+        : ["Geral", "Alimentação", "Moradia", "Transporte", "Saúde", "Educação", "Lazer", "Contas", "Dívidas", "Metas", "Outros"]
+      ).includes(category)
+        ? category
+        : "__custom__"
+    }
+    onChange={e =>
+      setCategory(
+        e.target.value === "__custom__" ? "" : e.target.value
+      )
+    }
+  >
+    <option value="" disabled>Selecione uma categoria</option>
+
     {kind === "income" ? (
       <>
-        <option value="Salário" />
-        <option value="Vendas" />
-        <option value="Serviços" />
-        <option value="Freelance" />
-        <option value="Rendimentos" />
-        <option value="Outros" />
+        <option value="Salário">Salário</option>
+        <option value="Vendas">Vendas</option>
+        <option value="Serviços">Serviços</option>
+        <option value="Freelance">Freelance</option>
+        <option value="Rendimentos">Rendimentos</option>
+        <option value="Outros">Outros</option>
       </>
     ) : (
       <>
-        <option value="Alimentação" />
-        <option value="Moradia" />
-        <option value="Transporte" />
-        <option value="Saúde" />
-        <option value="Educação" />
-        <option value="Lazer" />
-        <option value="Contas" />
-        <option value="Dívidas" />
-        <option value="Metas" />
-        <option value="Outros" />
+        <option value="Geral">Geral</option>
+        <option value="Alimentação">Alimentação</option>
+        <option value="Moradia">Moradia</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Saúde">Saúde</option>
+        <option value="Educação">Educação</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Contas">Contas</option>
+        <option value="Dívidas">Dívidas</option>
+        <option value="Metas">Metas</option>
+        <option value="Outros">Outros</option>
       </>
     )}
-  </datalist>
-</label>
 
+    <option value="__custom__">Personalizada</option>
+  </select>
+
+  {!(kind === "income"
+    ? ["Salário", "Vendas", "Serviços", "Freelance", "Rendimentos", "Outros"]
+    : ["Geral", "Alimentação", "Moradia", "Transporte", "Saúde", "Educação", "Lazer", "Contas", "Dívidas", "Metas", "Outros"]
+  ).includes(category) && (
+    <input
+      type="text"
+      value={category}
+      onChange={e => setCategory(e.target.value)}
+      placeholder="Digite sua categoria"
+    />
+  )}
+</label>
 
       <button className="primary" disabled={busy}>
         {busy
