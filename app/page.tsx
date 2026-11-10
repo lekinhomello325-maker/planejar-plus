@@ -1219,7 +1219,7 @@ const upcomingDebts = debts.filter(debt => {
       )}
     </form>
   </article>
- <article className="panel">
+ <article className="panel" id="metas">
   <p className="eyebrow">METAS E SONHOS</p>
   <h2>{editingGoalId ? "Editar meta" : "Nova meta"}</h2>
 
