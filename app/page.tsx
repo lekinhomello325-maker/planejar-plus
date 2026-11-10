@@ -308,6 +308,38 @@ function editTx(t: Tx) {
     setBusy(false);
   }
  }
+  
+async function removeGoal(id: string) {
+  if (!supabase || !session?.user) return;
+
+  const confirmar = window.confirm(
+    "Tem certeza que deseja excluir esta meta? Essa ação não poderá ser desfeita."
+  );
+
+  if (!confirmar) return;
+
+  setBusy(true);
+  setMsg("Excluindo meta...");
+
+  try {
+    const { error } = await supabase
+      .from("goals")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", session.user.id);
+
+    if (error) {
+      setMsg("Erro ao excluir meta: " + error.message);
+      return;
+    }
+
+    setMsg("Meta excluída com sucesso!");
+    await load();
+  } finally {
+    setBusy(false);
+  }
+}
+
  async function addGoal(e:FormEvent){e.preventDefault();if(!supabase||!session?.user||!goalName.trim()||Number(goalAmount)<=0)return;setBusy(true);const {error}=await supabase.from("goals").insert({user_id:session.user.id,name:goalName.trim(),target_amount:Number(goalAmount),current_amount:0});setBusy(false);if(error)setMsg(error.message);else{setGoalName("");setGoalAmount("");setMsg("Meta criada.");await load()}}
  async function addBudget(e:FormEvent){
   e.preventDefault();
