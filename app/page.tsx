@@ -1751,6 +1751,14 @@ const upcomingDebts = debts.filter(debt => {
           >
             Editar meta
           </button>
+          <button
+  type="button"
+  className="delete"
+  onClick={() => removeGoal(g.id)}
+  disabled={busy}
+>
+  Excluir meta
+</button>
         </div>
       ))}
     </div>
