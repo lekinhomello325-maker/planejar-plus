@@ -924,3 +924,38 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     min-height: 45px;
   }
 }
+/* MEUS OBJETIVOS - ORGANIZAÇÃO VISUAL */
+
+#metas > .eyebrow:nth-of-type(2) {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(84, 229, 162, 0.20);
+}
+
+#metas > .eyebrow {
+  letter-spacing: 1.2px;
+}
+
+#metas > h2 {
+  margin-bottom: 16px;
+}
+
+#metas .list {
+  gap: 14px;
+}
+
+#metas .goal {
+  padding: 16px;
+  border: 1px solid rgba(84, 229, 162, 0.18);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #10291e, #0b1d15);
+}
+
+#metas .goal .bar {
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+#metas .goal .muted {
+  font-size: 12px;
+}
