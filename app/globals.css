@@ -888,3 +888,22 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     grid-template-columns: 1fr;
   }
 }
+/* BOTAO DO FORMULARIO DE MOVIMENTACOES */
+
+.transactionForm button.primary {
+  min-height: 46px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.transactionForm button.primary:hover {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.transactionForm button.primary:active {
+  transform: scale(0.98);
+}
