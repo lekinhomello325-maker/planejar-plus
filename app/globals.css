@@ -1074,3 +1074,26 @@ body:has(#metas:target) .bottomNav a[href="#metas"] {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+/* PAINEL FINANCEIRO COMPACTO */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .stats .balanceCard {
+    grid-column: 1 / -1;
+  }
+
+  .stats .stat {
+    min-width: 0;
+    padding: 13px;
+  }
+}
