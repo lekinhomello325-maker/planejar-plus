@@ -940,7 +940,34 @@ const upcomingDebts = debts.filter(debt => {
     <strong className="negative">{brl(expenses)}</strong>
   </article>
 </section>
-   <section className="panel" id="relatorios">
+
+<section className="quickAccess">
+  <p className="eyebrow">ACESSO RÁPIDO</p>
+
+  <div className="quickAccessGrid">
+    <a href="#movimentacoes" className="quickAccessItem">
+      <span>＋</span>
+      Registrar movimentação
+    </a>
+
+    <a href="#metas" className="quickAccessItem">
+      <span>🎯</span>
+      Minhas metas
+    </a>
+
+    <a href="#dividas" className="quickAccessItem">
+      <span>📋</span>
+      Minhas dívidas
+    </a>
+
+    <a href="#relatorios" className="quickAccessItem">
+      <span>📊</span>
+      Relatórios
+    </a>
+  </div>
+</section>
+
+<section className="panel" id="relatorios">
   <p className="eyebrow">ANÁLISE FINANCEIRA</p>
   <h2>Relatórios mensais</h2>
 
