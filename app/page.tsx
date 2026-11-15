@@ -968,9 +968,57 @@ const upcomingDebts = debts.filter(debt => {
       <span>Despesas do mês</span>
       <strong className="negative">{brl(reportExpenses)}</strong>
     </article>
+  
   </section>
-   <div className="categoryReport">
-  <h3>🔔 Alertas de orçamento</h3>
+
+  <div className="categoryReport">
+    <h3>Saúde financeira</h3>
+
+    {reportIncome === 0 && reportExpenses === 0 ? (
+      <p className="muted">
+        Registre suas movimentações para avaliar sua saúde financeira.
+      </p>
+    ) : reportBalance < 0 ? (
+      <>
+        <strong style={{ color: "#ef4444" }}>
+          Crítica
+        </strong>
+        <p className="muted">
+          Suas despesas estão maiores que suas receitas neste mês.
+        </p>
+      </>
+    ) : reportIncome > 0 &&
+      reportBalance / reportIncome <= 0.10 ? (
+      <>
+        <strong style={{ color: "#eab308" }}>
+          Atenção
+        </strong>
+        <p className="muted">
+          Sua margem financeira está baixa. Procure reduzir despesas.
+        </p>
+      </>
+    ) : (
+      <>
+        <strong style={{ color: "#20d68a" }}>
+          Boa
+        </strong>
+        <p className="muted">
+          Parabéns! Suas receitas estão acima das despesas.
+        </p>
+      </>
+    )}
+
+    {reportIncome > 0 && reportBalance >= 0 && (
+      <p>
+        Economia do mês: {brl(reportBalance)} (
+        {(reportBalance / reportIncome * 100).toFixed(1)}%)
+      </p>
+    )}
+  </div>
+
+  <div className="categoryReport">
+    <h3>🔔 Alertas de orçamento</h3>
+
 
   {budgetAlerts.length === 0 ? (
     <p className="muted">
