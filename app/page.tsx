@@ -21,6 +21,11 @@ type DebtPayment = {
   amount: number;
   payment_date: string;
 };
+type Subscription = {
+  plan: "free" | "premium";
+  status: "free" | "trial" | "active" | "expired" | "canceled";
+  trial_ends_at: string | null;
+};
 const brl=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"}).format(v||0);
 export default function Home(){
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[mode,setMode]=useState<"login"|"signup">("login"),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
