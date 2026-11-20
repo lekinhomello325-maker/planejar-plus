@@ -30,6 +30,7 @@ const brl=(v:number)=>new Intl.NumberFormat("pt-BR",{style:"currency",currency:"
 export default function Home(){
  const [session,setSession]=useState<Session|null>(null),[email,setEmail]=useState(""),[password,setPassword]=useState(""),[mode,setMode]=useState<"login"|"signup">("login"),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
   const [showNotifications,setShowNotifications]=useState(false);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
   // PERFIL DO USUÁRIO
 const [showProfile,setShowProfile]=useState(false);
 const [profileName,setProfileName]=useState("");
